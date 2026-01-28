@@ -1,4 +1,3 @@
-// app/products/[productId]/page.tsx
 import { ProductI } from '@/interfaces'
 import Mystar from '@/components/ui/mystar'
 import { Button } from '@/components/ui/button'
@@ -10,9 +9,8 @@ import { Separator } from '@/components/ui/separator'
 
 export default async function ProductDetails({ params }: { params: Promise<{ productId: string }> }) {
   const { productId } = await params
-  const response = await fetch(`https://ecommerce.routemisr.com/api/v1/products/${productId}`)
+  const response = await fetch(`${process.env.API_URL}/products/${productId}`)
   const { data: product }: { data: ProductI } = await response.json()
-
   return (
     <main className="container mx-auto px-4 py-12 max-w-6xl">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start bg-card rounded-3xl border shadow-sm p-6 md:p-10">

@@ -7,54 +7,66 @@ import AddToCart from '@/components/addtoCart/addToCart'
 
 export function ProductCard({ product }: { product: ProductI }) {
     return (
-        <Card className="group overflow-hidden border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl w-full flex flex-col h-full bg-white">
-            <Link href={'/products/' + product.id} className="flex-grow">
-                {/* Image Wrapper - يملأ عرض الكارد بالكامل */}
-                <div className="relative aspect-square overflow-hidden bg-gray-50/40 p-5">
-                    <img 
-                        src={product.imageCover} 
-                        className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" 
-                        alt={product.title} 
-                    />
-                </div>
+        <Card className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col h-full">
 
-                <CardHeader className="p-4 pb-0 space-y-1">
-                    {/* Brand Name */}
-                    <span className="text-[10px] font-medium text-blue-600/70 uppercase tracking-widest">
+            {/* Image */}
+            <Link href={`/products/${product.id}`} className="block">
+                <div className="relative aspect-square bg-gradient-to-br from-slate-50 to-slate-100 p-6 overflow-hidden">
+                    <img
+                        src={product.imageCover}
+                        alt={product.title}
+                        className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-110"
+                    />
+
+                    {/* subtle overlay */}
+                    <div className="pointer-events-none absolute inset-0 bg-black/0 group-hover:bg-black/[0.02] transition" />
+                </div>
+            </Link>
+
+            {/* Content */}
+            <div className="flex flex-col flex-grow">
+                <CardHeader className="px-5 pt-4 pb-2 space-y-1">
+                    {/* Brand */}
+                    <span className="text-[10px] font-semibold tracking-widest uppercase text-blue-600/70">
                         {product.brand.name}
                     </span>
-                    {/* Title - Semi-bold */}
-                    <CardTitle className="text-sm md:text-base font-semibold line-clamp-1 group-hover:text-blue-600 transition-colors">
+
+                    {/* Title */}
+                    <CardTitle className="text-sm md:text-base font-semibold leading-snug line-clamp-2 group-hover:text-blue-600 transition-colors">
                         {product.title}
                     </CardTitle>
                 </CardHeader>
 
-                <CardContent className="p-4 pt-2 space-y-4">
+                <CardContent className="px-5 pt-2 pb-4 mt-auto space-y-4">
+                    {/* Rating + Price */}
                     <div className="flex items-center justify-between">
-                        {/* Rating Section */}
+                        {/* Rating */}
                         <div className="flex items-center gap-1">
                             {[1, 2, 3, 4, 5].map((s) => (
-                                <Mystar 
-                                    key={s} 
-                                    fill={s <= Math.round(product.ratingsAverage)} 
-                                    className="size-3 md:size-3.5" 
+                                <Mystar
+                                    key={s}
+                                    fill={s <= Math.round(product.ratingsAverage)}
+                                    className="size-3.5"
                                 />
                             ))}
-                            <span className="text-[10px] font-medium text-muted-foreground ml-1">
-                                ({product.ratingsAverage})
+                            <span className="ml-1 text-[10px] font-medium text-muted-foreground">
+                                {product.ratingsAverage.toFixed(1)}
                             </span>
                         </div>
-                        
-                        {/* Price - Semi-bold */}
-                        <p className="font-semibold text-base md:text-lg text-slate-900 leading-none">
-                            {product.price.toLocaleString()} <span className="text-[9px] font-normal text-muted-foreground uppercase">EGP</span>
+
+                        {/* Price */}
+                        <p className="text-base md:text-lg font-bold text-slate-900">
+                            {product.price.toLocaleString()}
+                            <span className="ml-1 text-[9px] font-medium text-muted-foreground uppercase">
+                                EGP
+                            </span>
                         </p>
                     </div>
                 </CardContent>
-            </Link>
+            </div>
 
-            {/* Action Button */}
-            <div className="p-4 pt-0">
+            {/* Action */}
+            <div className="px-5 pb-5">
                 <AddToCart productId={product._id} />
             </div>
         </Card>

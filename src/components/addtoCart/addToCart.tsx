@@ -5,29 +5,25 @@ import { Button } from '../ui/button'
 import { HeartIcon, Loader, ShoppingCartIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { CartContext } from '../context/cartContext'
+import { addToCartAction } from '@/app/(pages)/products/_action/addToCart.action'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 export default function AddToCart({ productId }: { productId: string }) {
+    const router = useRouter()
+    const session = useSession()
     let { getCart, setCartContent } = useContext(CartContext)
     const [isLoading, setIsLoading] = useState(false)
     async function addProductToCart() {
-        setIsLoading(true)
-        const response = await fetch(
-            'https://ecommerce.routemisr.com/api/v1/cart',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzRmOTdjZmM5YTIxZTBlNjUxODViNiIsIm5hbWUiOiJNb2hhbWVkIEZhaG1pIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjkyNzM3MjQsImV4cCI6MTc3NzA0OTcyNH0.s_Q2cgX25IHT026pX9Nlp6wn6fraAYGwoe3iMhRnqrY',
-                },
-                body: JSON.stringify({
-                    productId: productId,
-                }),
-            }
-        )
-        const data = await response.json()
-        data.status == 'success' && toast.success('Product added successfully')
-        setCartContent(data)
-        setIsLoading(false)
+        if (session.status == 'authenticated') {
+            setIsLoading(true)
+            const data = await addToCartAction(productId)
+            data.status == 'success' && toast.success('Product added successfully')
+            setCartContent(data)
+            setIsLoading(false)
+        } else {
+            router.push('/login')
+        }
     }
 
     return (

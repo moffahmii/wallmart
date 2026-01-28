@@ -5,6 +5,7 @@ import NavBar from "@/components/navbar/page";
 import { Toaster } from "@/components/ui/sonner"
 import CartContextProvider from "@/components/context/cartContext";
 import Footer from "@/components/footer/Footer";
+import MySessionProvider from "@/components/mySessionProvider/MySessionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,25 +28,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // suppressHydrationWarning مهمة جداً عشان إضافات المتصفح
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
-        <CartContextProvider>
-          <NavBar />
-
-          {/* استخدمنا flex-grow هنا عشان لو الصفحة محتواها قليل 
-              يفضل الـ Footer ملزوق تحت في قاع الشاشة 
-          */}
-          <main className="flex-grow">
-            {children}
-          </main>
-
-          <Footer />
-          <Toaster position="top-center" richColors />
-        </CartContextProvider>
+        <MySessionProvider>
+          <CartContextProvider>
+            <NavBar />
+            <main className="fgrow">
+              {children}
+            </main>
+            <Footer />
+            <Toaster position="top-center" richColors />
+          </CartContextProvider>
+        </MySessionProvider>
       </body>
     </html>
   );

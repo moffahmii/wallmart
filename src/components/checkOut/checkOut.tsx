@@ -43,7 +43,7 @@ export default function CheckOut({ cartId }: { cartId: string }) {
         const data = await response.json()
         console.log(data)
         if (data.status == 'success') {
-            window.location.href =data.session.url
+            window.location.href = data.session.url
         }
     }
 
@@ -55,13 +55,11 @@ export default function CheckOut({ cartId }: { cartId: string }) {
                         Proceed to Checkout
                     </Button>
                 </DialogTrigger>
-
                 <DialogContent className="sm:max-w-106.25">
                     <DialogHeader>
                         <DialogTitle>Add shipping address</DialogTitle>
                         <DialogDescription>Make sure your data is accurate!</DialogDescription>
                     </DialogHeader>
-
                     <div className="grid gap-4">
                         <div className="grid gap-3">
                             <Label>City</Label>
@@ -76,12 +74,10 @@ export default function CheckOut({ cartId }: { cartId: string }) {
                             <Input id="phone" ref={phoneInput} />
                         </div>
                     </div>
-
                     <DialogFooter>
                         <DialogClose asChild>
                             <Button variant="outline">Cancel</Button>
                         </DialogClose>
-
                         <Button onClick={checkOutSession} type="button">
                             <CreditCard /> Visa
                         </Button>

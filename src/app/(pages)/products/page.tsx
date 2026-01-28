@@ -3,6 +3,7 @@ import SidebarFilter from '@/components/sideBarFilter/SideBarFilter'
 import { ProductI, CategoryI, SubcategoryI } from '@/interfaces'
 
 async function getData(category?: string, subcategory?: string) {
+
     // بناء الرابط بناءً على الفلاتر المختارة
     let productUrl = 'https://ecommerce.routemisr.com/api/v1/products'
     const params = new URLSearchParams()
