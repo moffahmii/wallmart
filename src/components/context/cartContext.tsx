@@ -1,6 +1,6 @@
 'use client'
 
-import { getCartAction } from "@/app/(pages)/cart/_actions/getCart"
+import { getCartAction } from "@/app/(pages)/cart/_actions/cartActions";
 import { CartResponse } from "@/interfaces"
 import { createContext, ReactNode, useEffect, useState, useCallback } from "react"
 
