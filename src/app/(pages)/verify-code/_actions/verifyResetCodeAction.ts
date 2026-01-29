@@ -1,15 +1,13 @@
+'use server';
 export async function verifyResetCodeAction(resetCode: string) {
     try {
-        const response = await fetch(`https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode`, {
+        const response = await fetch(`${process.env.API_URL}/auth/verifyResetCode`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ resetCode }),
         });
-
         const data = await response.json();
-        
-        // API Route يرجع status: "Success" عند نجاح الكود
-        if (data.status !== "Success") {
+                if (data.status !== "Success") {
             throw new Error(data.message || "Invalid or expired code");
         }
 

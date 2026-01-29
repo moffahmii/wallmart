@@ -30,7 +30,6 @@ export default function CartContextProvider({
     async function getCart() {
         try {
             setIsLoading(true)
-
             const response = await fetch('http://localhost:3000/api/get-cart')
             const data: CartResponse = await response.json()
             setCartContent(data)

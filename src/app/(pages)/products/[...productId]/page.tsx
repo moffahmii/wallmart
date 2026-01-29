@@ -17,23 +17,19 @@ export default async function ProductDetails({ params }: { params: Promise<{ pro
         <div className="sticky top-24 rounded-2xl overflow-hidden bg-muted">
           <ProductSlider image={product.images} altCont={product.title} />
         </div>
-        
         <div className="space-y-6">
           <Badge variant="outline" className="text-blue-600 border-blue-600 text-sm px-3 py-1 font-bold">{product.brand.name}</Badge>
           <h1 className="text-4xl font-black tracking-tight leading-tight">{product.title}</h1>
-          
           <div className="flex items-center gap-4">
-             <div className="flex items-center gap-0.5">
-               {[1,2,3,4,5].map(s => <Mystar key={s} fill={s <= Math.round(product.ratingsAverage)} className="size-5" />)}
-             </div>
-             <span className="text-muted-foreground font-medium">({product.ratingsQuantity} Reviews)</span>
+            <div className="flex items-center gap-0.5">
+              {[1, 2, 3, 4, 5].map(s => <Mystar key={s} fill={s <= Math.round(product.ratingsAverage)} className="size-5" />)}
+            </div>
+            <span className="text-muted-foreground font-medium">({product.ratingsQuantity} Reviews)</span>
           </div>
-
           <p className="text-4xl font-black text-blue-600">{product.price.toLocaleString()} EGP</p>
           <Separator />
           <p className="text-lg text-muted-foreground leading-relaxed">{product.description}</p>
           <Separator />
-
           <div className="flex gap-4 pt-4">
             <div className="flex-1"><AddToCart productId={product._id} /></div>
             <Button variant="outline" size="icon" className="h-14 w-14 rounded-2xl border-2 hover:text-red-600 hover:bg-red-50">

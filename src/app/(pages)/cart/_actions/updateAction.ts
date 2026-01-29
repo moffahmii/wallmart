@@ -2,7 +2,7 @@
 import getUserToken from "@/app/helpers/getUserToken"
 import { CartResponse } from "@/interfaces"
 export default async function updateCartAction(productId: string, count: number) {
-    const token = getUserToken()
+    const token = await getUserToken()
     const response = await fetch(
         `${process.env.API_URL}/cart/` + productId,
         {

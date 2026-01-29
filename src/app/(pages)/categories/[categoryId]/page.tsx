@@ -22,16 +22,13 @@ export default async function CategoryDetails({
     const { data: category }: { data: CategoryI } = await categoryRes.json()
     return (
         <main className="container mx-auto py-12 px-4">
-            {/* --- Category Banner Section --- */}
             <section className="relative h-75 md:h-100 w-full rounded-[40px] overflow-hidden mb-16 shadow-2xl">
-                {/* خلفية الصورة مع Overlay */}
                 <img
                     src={category.image}
                     alt={category.name}
                     className="absolute inset-0 h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-900/40 to-transparent"></div>
-                {/* نصوص القسم فوق الصورة */}
                 <div className="absolute bottom-10 left-10 space-y-4">
                     <Badge className="bg-blue-600 text-white border-none px-4 py-1 text-sm font-bold uppercase tracking-widest">
                         Category Showcase
@@ -44,7 +41,6 @@ export default async function CategoryDetails({
                     </p>
                 </div>
             </section>
-            {/* --- Products Grid Section --- */}
             <section className="space-y-10">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b pb-6">
                     <div>

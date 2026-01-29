@@ -31,7 +31,6 @@ export default function AddToCart({ productId }: { productId: string }) {
             <Button onClick={addProductToCart} className='grow cursor-pointer'>
                 {isLoading ? <Loader className='animate-spin' /> : <ShoppingCartIcon />}  Add to cart
             </Button>
-            <HeartIcon />
         </CardFooter>
     )
 }

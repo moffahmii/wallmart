@@ -4,10 +4,9 @@ import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { ProductCard } from "@/components/productCard/ProductCard"
 
-// دالة لجلب منتجات البراند بشكل محدد
 async function getBrandProducts(brandId: string) {
   const response = await fetch(
-    `https://ecommerce.routemisr.com/api/v1/products?brand=${brandId}`
+    `${process.env.API_URL}/products?brand=${brandId}`
   )
   const data = await response.json()
   return data.data as ProductI[]
@@ -20,19 +19,14 @@ export default async function BrandDetails({
 }) {
   const { brandId } = await params
 
-  // Fetch Brand Info & Products in Parallel (Performance Boost)
-  const brandPromise = fetch(`https://ecommerce.routemisr.com/api/v1/brands/${brandId}`)
+  const brandPromise = fetch(`${process.env.API_URL}/brands/${brandId}`)
   const productsPromise = getBrandProducts(brandId)
-
   const [brandRes, products] = await Promise.all([brandPromise, productsPromise])
-
   if (!brandRes.ok) notFound()
-
   const { data: brand }: { data: BrandI } = await brandRes.json()
 
   return (
     <main className="container mx-auto py-12 px-4">
-      {/* --- Brand Hero Header --- */}
       <div className="flex flex-col md:flex-row items-center gap-8 bg-slate-50 p-8 rounded-[32px] border border-slate-100 mb-12">
         <div className="relative h-40 w-40 bg-white rounded-2xl shadow-sm overflow-hidden p-4 border flex items-center justify-center">
           <img
@@ -56,8 +50,6 @@ export default async function BrandDetails({
           </div>
         </div>
       </div>
-
-      {/* --- Brand Products Section --- */}
       <div className="space-y-8">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-black tracking-tight">
@@ -65,7 +57,6 @@ export default async function BrandDetails({
           </h2>
           <p className="text-muted-foreground font-bold">{products.length} Items Found</p>
         </div>
-
         {products.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {products.map((product) => (

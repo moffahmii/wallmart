@@ -1,15 +1,16 @@
 'use server'
 
+import getUserToken from "@/app/helpers/getUserToken"
 import { CartResponse } from "@/interfaces"
-
+import { get } from "http"
 export default async function removeFromCartAction(productId: string) {
+    const token = await getUserToken()
     const response = await fetch(
         `${process.env.API_URL}/cart/` + productId,
         {
             method: 'DELETE',
             headers: {
-                token:
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzRmOTdjZmM5YTIxZTBlNjUxODViNiIsIm5hbWUiOiJNb2hhbWVkIEZhaG1pIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjkzNzA5MTMsImV4cCI6MTc3NzE0NjkxM30.SlvFLZd5Y6RqTOIyAu_W3N217XTdayTcEWJ3uUBx3yw',
+                token: token!
             },
         })
     const data: CartResponse = await response.json()

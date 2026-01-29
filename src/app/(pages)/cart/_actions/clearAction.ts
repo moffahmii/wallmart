@@ -3,7 +3,7 @@ import getUserToken from "@/app/helpers/getUserToken"
 import { CartResponse } from "@/interfaces"
 
 export default async function clearCartAction() {
-    const token = getUserToken()
+    const token = await getUserToken()
     const response = await fetch(
         `${process.env.API_URL}/cart/`,
         {

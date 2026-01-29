@@ -1,5 +1,4 @@
 "use client"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -13,10 +12,9 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Loader2, Mail, KeyRound, ArrowLeft, CheckCircle2 } from "lucide-react"
+import { Loader2, Mail, KeyRound, ArrowLeft, CheckCircle2, XCircle } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
-import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { forgotPasswordAction } from "../login/_actions/forgotPasswordAction"
 
@@ -28,26 +26,31 @@ type ForgotFields = z.infer<typeof forgotSchema>
 
 export default function ForgotPassword() {
     const [isLoading, setIsLoading] = useState(false)
+    const [serverMessage, setServerMessage] = useState<{ type: 'error' | 'success', text: string } | null>(null)
     const router = useRouter()
-
     const form = useForm<ForgotFields>({
         resolver: zodResolver(forgotSchema),
         mode: "onChange",
         defaultValues: { email: "" },
     })
-
     const { errors, touchedFields } = form.formState
-
     async function onSubmit(values: ForgotFields) {
         setIsLoading(true)
+        setServerMessage(null) 
+
         const result = await forgotPasswordAction(values.email)
 
         if (result.success) {
-            toast.success("Success! Please check your email for the reset code.")
-            // الـ Route API بيحتاج الخطوة الجاية تكون التحقق من الـ Reset Code
-            router.push("/verify-code")
+            setServerMessage({
+                type: 'success',
+                text: "Success! We've sent a code to your email."
+            })
+            setTimeout(() => router.push("/verify-code"), 2000)
         } else {
-            toast.error(result.error || "Something went wrong")
+            setServerMessage({
+                type: 'error',
+                text: "We couldn't find an account with that email."
+            })
         }
         setIsLoading(false)
     }
@@ -68,7 +71,20 @@ export default function ForgotPassword() {
                             Enter your email to recover your account
                         </p>
                     </div>
+
                     <div className="p-8">
+                        {serverMessage && (
+                            <div className={`mb-6 p-4 rounded-2xl border-2 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300 ${serverMessage.type === 'success'
+                                    ? 'bg-emerald-50 border-emerald-500 text-emerald-700'
+                                    : 'bg-rose-50 border-rose-500 text-rose-700'
+                                }`}>
+                                {serverMessage.type === 'success' ? <CheckCircle2 size={20} /> : <XCircle size={20} />}
+                                <span className="text-xs font-black uppercase italic tracking-tight">
+                                    {serverMessage.text}
+                                </span>
+                            </div>
+                        )}
+
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                                 <FormField
@@ -88,11 +104,12 @@ export default function ForgotPassword() {
                                                 <div className="relative">
                                                     <Mail className={`absolute left-3 top-3.5 size-4 transition-colors ${touchedFields.email ? (errors.email ? 'text-red-400' : 'text-green-500') : 'text-slate-400'}`} />
                                                     <Input
-                                                        placeholder="routeegypt@gmail.com"
+                                                        placeholder="name@example.com"
                                                         {...field}
+                                                        autoComplete="off"
                                                         className={`pl-10 h-12 rounded-xl transition-all duration-200 border-2 ${touchedFields.email
-                                                                ? (errors.email ? "border-red-500 bg-red-50/30 focus-visible:ring-red-500" : "border-green-500 bg-green-50/30 focus-visible:ring-green-500")
-                                                                : "border-slate-100 focus:border-blue-600"
+                                                            ? (errors.email ? "border-red-500 bg-red-50/30 focus-visible:ring-red-500" : "border-green-500 bg-green-50/30 focus-visible:ring-green-500")
+                                                            : "border-slate-100 focus:border-blue-600"
                                                             }`}
                                                     />
                                                 </div>
@@ -101,8 +118,8 @@ export default function ForgotPassword() {
                                         </FormItem>
                                     )}
                                 />
-
                                 <Button
+                                    type="submit"
                                     disabled={isLoading || !form.formState.isValid}
                                     className="w-full h-14 rounded-2xl text-lg font-black uppercase italic bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all active:scale-95 disabled:opacity-50"
                                 >
@@ -128,7 +145,6 @@ export default function ForgotPassword() {
                         </div>
                     </div>
                 </div>
-
                 {/* Footer Note */}
                 <p className="mt-8 text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest">
                     WallMart Security System v2.0

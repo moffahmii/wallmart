@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useSearchParams, useRouter } from "next/navigation"
-import { Loader2, Lock, Mail, XCircle } from "lucide-react"
+import { Eye, EyeOff, Loader2, Lock, Mail, XCircle } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -26,6 +26,7 @@ const formSchema = z.object({
 type FormFields = z.infer<typeof formSchema>
 
 export default function Login() {
+    const [showPassword, setShowPassword] = useState(false)
     const router = useRouter()
     const searchParams = useSearchParams()
     const [isLoading, setIsLoading] = useState(false)
@@ -103,7 +104,6 @@ export default function Login() {
                                                 <FormLabel className="text-[10px] font-black uppercase text-slate-500 tracking-widest">
                                                     Password
                                                 </FormLabel>
-                                                {/* Forgot Password Link */}
                                                 <Link
                                                     href="/forgot-password"
                                                     className="text-[10px] font-bold uppercase italic text-blue-600 hover:underline"
@@ -112,14 +112,27 @@ export default function Login() {
                                                 </Link>
                                             </div>
                                             <FormControl>
-                                                <div className="relative">
-                                                    <Lock className="absolute left-3 top-3.5 text-slate-400 size-4" />
+                                                <div className="relative flex items-center"> 
+                                                    <Lock className="absolute left-3 text-slate-400 size-4 z-20" />
                                                     <Input
-                                                        type="password"
+                                                        autoComplete="new-password" 
+                                                        type={showPassword ? "text" : "password"}
                                                         placeholder="••••••••"
                                                         {...field}
-                                                        className="pl-10 h-12 rounded-xl border-slate-200 focus:border-blue-600 focus:ring-blue-600"
+                                                        className="pl-10 pr-10 h-12 rounded-xl border-slate-200 focus:border-blue-600 focus:ring-blue-600 z-10"
                                                     />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setShowPassword((prev) => !prev)}
+                                                        className="absolute right-3 z-20 p-1 text-slate-400 hover:text-blue-600 transition-colors cursor-pointer" // أضفنا z-20 و cursor-pointer
+                                                        aria-label={showPassword ? "Hide password" : "Show password"}
+                                                    >
+                                                        {showPassword ? (
+                                                            <EyeOff className="size-4" />
+                                                        ) : (
+                                                            <Eye className="size-4" />
+                                                        )}
+                                                    </button>
                                                 </div>
                                             </FormControl>
                                             <FormMessage className="font-bold italic text-xs" />

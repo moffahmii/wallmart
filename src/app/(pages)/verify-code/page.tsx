@@ -13,9 +13,8 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Loader2, ShieldCheck, ArrowRight, RefreshCcw } from "lucide-react"
+import { Loader2, ShieldCheck, ArrowRight, RefreshCcw, XCircle, CheckCircle2 } from "lucide-react"
 import { useState } from "react"
-import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { verifyResetCodeAction } from "./_actions/verifyResetCodeAction"
 
@@ -27,6 +26,8 @@ type VerifyFields = z.infer<typeof verifySchema>
 
 export default function VerifyCode() {
     const [isLoading, setIsLoading] = useState(false)
+    // ✅ State لإدارة الرسائل المدمجة
+    const [serverMessage, setServerMessage] = useState<{ type: 'error' | 'success', text: string } | null>(null)
     const router = useRouter()
 
     const form = useForm<VerifyFields>({
@@ -37,14 +38,16 @@ export default function VerifyCode() {
 
     async function onSubmit(values: VerifyFields) {
         setIsLoading(true)
-        const result = await verifyResetCodeAction(values.resetCode)
+        setServerMessage(null) // تصفير الرسالة القديمة
 
+        const result = await verifyResetCodeAction(values.resetCode)
+        
         if (result.success) {
-            toast.success("Code verified! You can now reset your password.")
-            // الخطوة التالية هي صفحة تعيين الباسورد الجديد
-            router.push("/reset-password")
+            setServerMessage({ type: 'success', text: "Code verified! Redirecting to reset page..." })
+            // تأخير بسيط لمنح المستخدم فرصة لقراءة رسالة النجاح
+            setTimeout(() => router.push("/reset-password"), 1500)
         } else {
-            toast.error(result.error)
+            setServerMessage({ type: 'error', text: result.error || "Invalid or expired code. Please try again." })
         }
         setIsLoading(false)
     }
@@ -65,6 +68,20 @@ export default function VerifyCode() {
                     </div>
 
                     <div className="p-8">
+                        {/* ✅ عرض رسالة السيرفر فوق الحقول */}
+                        {serverMessage && (
+                            <div className={`mb-6 p-4 rounded-2xl border-2 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300 ${
+                                serverMessage.type === 'success' 
+                                ? 'bg-emerald-50 border-emerald-500 text-emerald-700' 
+                                : 'bg-rose-50 border-rose-500 text-rose-700'
+                            }`}>
+                                {serverMessage.type === 'success' ? <CheckCircle2 size={20} /> : <XCircle size={20} />}
+                                <span className="text-xs font-black uppercase italic tracking-tight">
+                                    {serverMessage.text}
+                                </span>
+                            </div>
+                        )}
+
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                                 <FormField
@@ -78,6 +95,7 @@ export default function VerifyCode() {
                                             <FormControl>
                                                 <div className="relative">
                                                     <Input
+                                                        autoComplete="off"
                                                         placeholder="Ex: 535863"
                                                         {...field}
                                                         className="h-14 text-center text-2xl font-black tracking-[0.5em] rounded-xl border-2 border-slate-100 focus:border-blue-600 focus:ring-0 transition-all"
@@ -90,6 +108,7 @@ export default function VerifyCode() {
                                 />
 
                                 <Button
+                                    type="submit"
                                     disabled={isLoading}
                                     className="w-full h-14 rounded-2xl text-lg font-black uppercase italic bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all active:scale-95 flex gap-2"
                                 >
@@ -104,6 +123,7 @@ export default function VerifyCode() {
 
                         <div className="mt-8 text-center">
                             <button
+                                type="button"
                                 onClick={() => router.back()}
                                 className="inline-flex items-center gap-2 text-xs font-black text-slate-400 hover:text-blue-600 transition-colors uppercase italic"
                             >
