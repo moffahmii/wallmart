@@ -2,7 +2,7 @@
 
 import getUserToken from "@/app/helpers/getUserToken";
 
-const BASE_URL = `${process.env.API_URL}cart`;
+const BASE_URL = `${process.env.API_URL}/cart`;
 
 async function getAuthHeaders() {
     const token = await getUserToken();
@@ -19,11 +19,9 @@ export async function getCartAction() {
         const res = await fetch(BASE_URL, {
             method: 'GET',
             headers,
-            next: { tags: ['cart'] } // لتمكين الـ Revalidation في Next.js
+            next: { tags: ['cart'] } 
         });
-
         if (!res.ok) throw new Error("Failed to fetch cart");
-
         return await res.json();
     } catch (error) {
         console.error("Get Cart Action Error:", error);
@@ -40,7 +38,6 @@ export async function updateCartAction(productId: string, count: number) {
             headers,
             body: JSON.stringify({ count })
         });
-
         const data = await res.json();
         return data;
     } catch (error) {
@@ -57,7 +54,6 @@ export async function removeFromCartAction(productId: string) {
             method: 'DELETE',
             headers
         });
-
         const data = await res.json();
         return data;
     } catch (error) {
@@ -74,7 +70,6 @@ export async function clearCartAction() {
             method: 'DELETE',
             headers
         });
-
         const data = await res.json();
         return data;
     } catch (error) {
