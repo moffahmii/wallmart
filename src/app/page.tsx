@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge'
 async function getProducts(): Promise<ProductI[]> {
   try {
     const res = await fetch(
-      `${process.env.API_URL}/products?limit=8`,
+      `${process.env.NEXT_PUBLIC_API_URL}/products?limit=8`,
       { cache: 'no-store' }
     )
     if (!res.ok) return []
@@ -24,7 +24,7 @@ async function getProducts(): Promise<ProductI[]> {
 async function getCategories(): Promise<CategoryI[]> {
   try {
     const res = await fetch(
-      `${process.env.API_URL}/categories`,
+      `${process.env.NEXT_PUBLIC_API_URL}/categories`,
       { cache: 'no-store' }
     )
     if (!res.ok) return []
