@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React from 'react'
 
 export default async function Categories() {
-    const response = await fetch(`${process.env.API_URL}/categories`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`, {
         next: { revalidate: 3600 }
     })
     const { data: categories }: { data: CategoryI[] } = await response.json()

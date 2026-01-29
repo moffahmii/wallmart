@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/productCard/ProductCard"
 async function getCategoryProducts(categoryId: string) {
     try {
         const response = await fetch(
-            `${process.env.API_URL}/v1/products?category=${categoryId}`
+            `${process.env.NEXT_PUBLIC_API_URL}/v1/products?category=${categoryId}`
         )
         if (!response.ok) return [] // لو السيرفر رجع خطأ، رجع مصفوفة فاضية بدل ما يضرب
 
