@@ -22,7 +22,7 @@ export default async function Brands() {
 
             {/* Brands Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-                {brands.map((brand) => (
+                {brands?.map((brand) => (
                     <Link key={brand._id} href={`/brands/${brand._id}`} className="group">
                         <Card className="h-full border-none shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-white">
                             <CardHeader className="p-0">

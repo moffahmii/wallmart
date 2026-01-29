@@ -18,7 +18,7 @@ export default async function Categories() {
                 <p className="text-muted-foreground mt-2 text-lg font-medium italic">Discover everything you need, organized just for you.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {categories.map((category) => (
+                {categories?.map((category) => (
                     <Link key={category._id} href={`/categories/${category._id}`} className="group">
                         <Card className="h-full border-none shadow-md hover:shadow-2xl transition-all duration-500 rounded-[32px] overflow-hidden bg-white">
                             <div className="relative aspect-4/5 w-full overflow-hidden bg-slate-100">
