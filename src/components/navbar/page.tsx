@@ -26,11 +26,12 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/co
 import { signOut, useSession } from 'next-auth/react'
 
 export default function NavBar() {
-  const { cartContent, isLoading } = useContext(CartContext)
+  const context = useContext(CartContext)
+  const cartContent = context?.cartContent
+  const isLoading = context?.isLoading ?? false
   const pathname = usePathname()
   const cartCount = cartContent?.numOfCartItems ?? 0
   const { data: session, status } = useSession()
-
   const navLinks = [
     { name: 'Products', href: '/products' },
     { name: 'Brands', href: '/brands' },
@@ -76,6 +77,7 @@ export default function NavBar() {
             </span>
           </Link>
         </div>
+
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center">
           <NavigationMenu>
@@ -90,6 +92,7 @@ export default function NavBar() {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
+
         {/* Right Side Actions */}
         <div className="flex items-center gap-2 md:gap-4">
           {status === 'authenticated' ? (
