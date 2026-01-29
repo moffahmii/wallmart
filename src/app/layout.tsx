@@ -39,7 +39,7 @@ export default function RootLayout({
             <NavBar />
             <main className="fgrow">
               {children}
-              <WishlistFloatButton /> {/* 👈 هنا الزر العائم */}
+              <WishlistFloatButton />
             </main>
             <Footer />
             <Toaster position="top-center" richColors />

@@ -12,7 +12,6 @@ export default function Error({
     reset: () => void
 }) {
     useEffect(() => {
-        // ممكن هنا تبعث الخطأ لخدمة زي Sentry عشان تعرف إن السيرفر واقع
         console.error('Captured Error:', error)
     }, [error])
 

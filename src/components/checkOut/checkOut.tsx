@@ -26,22 +26,19 @@ export default function CheckOut({ cartId }: { cartId: string }) {
     const detailsInput = useRef<HTMLInputElement | null>(null)
     const cityInput = useRef<HTMLInputElement | null>(null)
     const phoneInput = useRef<HTMLInputElement | null>(null)
-
-    // دالة الدفع أونلاين (Visa)
     async function checkOutSession() {
+        const token = await getUserToken()
         const shippingAddress = {
             details: detailsInput.current?.value,
             city: cityInput.current?.value,
             phone: phoneInput.current?.value
         }
-
         const response = await fetch(
             `${process.env.API_URL}/orders/checkout-session/${cartId}?url=${window.location.origin}`,
             {
                 method: "POST",
                 headers: {
-                    // نستخدم التوكن الحقيقي من السيشن بدلاً من الثابت
-                    token: (session as any)?.token,
+                    token: token!,
                     'content-type': 'application/json'
                 },
                 body: JSON.stringify({ shippingAddress })
@@ -54,8 +51,8 @@ export default function CheckOut({ cartId }: { cartId: string }) {
         }
     }
 
-    // دالة الدفع كاش (Cash)
     async function createCashOrder() {
+        
         const shippingAddress = {
             details: detailsInput.current?.value,
             city: cityInput.current?.value,
@@ -67,13 +64,12 @@ export default function CheckOut({ cartId }: { cartId: string }) {
             {
                 method: "POST",
                 headers: {
-                    token: String(token),
+                    token: token!,
                     'content-type': 'application/json'
                 },
                 body: JSON.stringify({ shippingAddress })
             }
         )
-
         const data = await response.json()
         if (data.status === 'success') {
             toast.success("Order Created Successfully!")
