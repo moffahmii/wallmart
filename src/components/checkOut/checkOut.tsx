@@ -34,7 +34,7 @@ export default function CheckOut({ cartId }: { cartId: string }) {
             phone: phoneInput.current?.value
         }
         const response = await fetch(
-            `${process.env.API_URL}/orders/checkout-session/${cartId}?url=${window.location.origin}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/orders/checkout-session/${cartId}?url=${process.env.NEXT_PUBLIC_URL}`,
             {
                 method: "POST",
                 headers: {
@@ -44,15 +44,12 @@ export default function CheckOut({ cartId }: { cartId: string }) {
                 body: JSON.stringify({ shippingAddress })
             }
         )
-
         const data = await response.json()
         if (data.status === 'success') {
             window.location.href = data.session.url
         }
     }
-
     async function createCashOrder() {
-        
         const shippingAddress = {
             details: detailsInput.current?.value,
             city: cityInput.current?.value,

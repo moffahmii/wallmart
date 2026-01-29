@@ -2,7 +2,7 @@
 
 import getUserToken from "@/app/helpers/getUserToken";
 
-const BASE_URL = `${process.env.API_URL}/cart`;
+const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/cart`;
 
 async function getAuthHeaders() {
     const token = await getUserToken();

@@ -4,15 +4,15 @@ import { ProductI, CategoryI, SubcategoryI } from '@/interfaces'
 
 async function getData(category?: string, subcategory?: string) {
     try {
-        let productUrl = `${process.env.API_URL}/products`
+        let productUrl = `${process.env.NEXT_PUBLIC_API_URL}/products`
         const params = new URLSearchParams()
         if (category) params.append('category', category)
         if (subcategory) params.append('subcategory', subcategory)
         if (params.toString()) productUrl += `?${params.toString()}`
         const [prodRes, catRes, subRes] = await Promise.all([
             fetch(productUrl),
-            fetch(`${process.env.API_URL}/categories`),
-            fetch(`${process.env.API_URL}/subcategories`)
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`),
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}/subcategories`)
         ])
         const products = await prodRes.json()
         const categories = await catRes.json()

@@ -14,16 +14,13 @@ export default function SidebarFilter({
 }) {
     const router = useRouter()
     const searchParams = useSearchParams()
-
     const handleFilter = (key: string, value: string) => {
         const params = new URLSearchParams(searchParams.toString())
-
         if (params.get(key) === value) {
             params.delete(key) // إلغاء الفلتر إذا ضغطت عليه مرة أخرى
         } else {
             params.set(key, value)
         }
-
         router.push(`/products?${params.toString()}`)
     }
 

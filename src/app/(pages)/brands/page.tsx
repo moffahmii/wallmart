@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React from 'react'
 
 export default async function Brands() {
-    const response = await fetch('https://ecommerce.routemisr.com/api/v1/brands', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/brands`, {
         next: { revalidate: 3600 } // تحديث كل ساعة لزيادة الأداء
     })
     const { data: brands }: { data: BrandI[] } = await response.json()

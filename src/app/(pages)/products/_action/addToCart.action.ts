@@ -2,7 +2,7 @@
 import getUserToken from "@/app/helpers/getUserToken"
 export async function addToCartAction(productId: string) {
     const token = await getUserToken()
-    const response = await fetch(`${process.env.API_URL}/cart`,
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`,
         {
             method: 'POST',
             headers: {

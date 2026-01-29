@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/productCard/ProductCard"
 
 async function getBrandProducts(brandId: string) {
   const response = await fetch(
-    `${process.env.API_URL}/products?brand=${brandId}`
+    `${process.env.NEXT_PUBLIC_API_URL}/products?brand=${brandId}`
   )
   const data = await response.json()
   return data.data as ProductI[]
@@ -19,7 +19,7 @@ export default async function BrandDetails({
 }) {
   const { brandId } = await params
 
-  const brandPromise = fetch(`${process.env.API_URL}/brands/${brandId}`)
+  const brandPromise = fetch(`${process.env.NEXT_PUBLIC_API_URL}/brands/${brandId}`)
   const productsPromise = getBrandProducts(brandId)
   const [brandRes, products] = await Promise.all([brandPromise, productsPromise])
   if (!brandRes.ok) notFound()

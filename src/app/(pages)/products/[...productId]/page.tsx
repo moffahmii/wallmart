@@ -9,7 +9,7 @@ import { Separator } from '@/components/ui/separator'
 
 export default async function ProductDetails({ params }: { params: Promise<{ productId: string }> }) {
   const { productId } = await params
-  const response = await fetch(`${process.env.API_URL}/products/${productId}`)
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`)
   const { data: product }: { data: ProductI } = await response.json()
   return (
     <main className="container mx-auto px-4 py-12 max-w-6xl">

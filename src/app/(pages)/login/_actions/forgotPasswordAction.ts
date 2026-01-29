@@ -1,7 +1,7 @@
 'use server';
 export async function forgotPasswordAction(email: string) {
     try {
-        const response = await fetch(`${process.env.API_URL}/auth/forgotPasswords`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/forgotPasswords`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email }),
