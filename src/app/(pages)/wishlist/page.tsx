@@ -20,10 +20,10 @@ export default async function WishlistPage() {
                         <span className="text-[10px] font-black uppercase tracking-widest italic">Personal Collection</span>
                     </div>
                     <h1 className="text-6xl md:text-8xl font-black uppercase italic tracking-tighter leading-[0.8]">
-                        My <span className="text-red-500 underline decoration-8 underline-offset-[12px]">Vault</span>
+                        My <span className="text-red-500 underline decoration-8 underline-offset-12">Vault</span>
                     </h1>
                 </div>
-                <div className="bg-white border-4 border-slate-900 px-8 py-4 rounded-[20px] shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
+                <div className="bg-white border-4 border-slate-900 px-8 py-4 rounded-4xl shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
                     <p className="font-black italic uppercase text-xl">
                         {wishlistProducts.length} Saved Items
                     </p>
@@ -33,7 +33,7 @@ export default async function WishlistPage() {
             {wishlistProducts.length > 0 ? (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {wishlistProducts.map((product) => (
-                        <div key={product._id} className="group flex bg-white border-4 border-slate-900 rounded-[32px] overflow-hidden shadow-[12px_12px_0px_0px_rgba(15,23,42,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all duration-300 min-h-[220px]">
+                        <div key={product._id} className="group flex bg-white border-4 border-slate-900 rounded-[32px] overflow-hidden shadow-[12px_12px_0px_0px_rgba(15,23,42,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all duration-300 min-h-55">
                             
                             {/* صورة المنتج مع زر الـ Toggle السريع */}
                             <div className="w-1/3 bg-slate-100 p-4 border-r-4 border-slate-900 overflow-hidden relative">
