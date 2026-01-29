@@ -36,7 +36,7 @@ export default function CheckOut({ cartId }: { cartId: string }) {
         }
 
         const response = await fetch(
-            `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${window.location.origin}`,
+            `${process.env.API_URL}/orders/checkout-session/${cartId}?url=${window.location.origin}`,
             {
                 method: "POST",
                 headers: {
@@ -77,7 +77,6 @@ export default function CheckOut({ cartId }: { cartId: string }) {
         const data = await response.json()
         if (data.status === 'success') {
             toast.success("Order Created Successfully!")
-            // التوجه لصفحة كل الطلبات باستخدام الـ ID
             router.push(`/allorders`)
         }
     }

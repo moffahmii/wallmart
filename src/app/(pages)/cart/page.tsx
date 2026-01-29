@@ -1,16 +1,21 @@
 'use client'
 import React, { useContext, useEffect, useState } from 'react'
-import { CartContext } from '@/components/context/cartContext'
 import Loading from '@/app/loading'
 import EmptyCart from '@/components/emptyCart/EmptyCart'
 import { toast } from 'sonner'
-import { CartItem } from './cartItem'
 import { CartSummary } from './cartSummary'
-import updateCartAction from './_actions/updateAction'
-import removeFromCartAction from './_actions/removeAction'
+import { CartItem } from './cartItem'
+import { removeFromCartAction, updateCartAction } from './_actions/cartActions'
+import { CartContext } from '@/components/context/cartContext'
 
 export default function Cart() {
-    const { cartContent, isLoading, getCart, setCartContent } = useContext(CartContext)
+    const context = useContext(CartContext)
+    if (!context) {
+        console.error("CartContext must be used within a CartContextProvider");
+        return null;
+    }
+
+    const { cartContent, isLoading, getCart, setCartContent } = context;
     const [removingId, setRemovingId] = useState<string | null>(null)
     const [updatingId, setUpdatingId] = useState<string | null>(null)
 
@@ -19,7 +24,9 @@ export default function Cart() {
     }, [cartContent, getCart])
 
     if (isLoading || !cartContent) return <Loading />
+    
     if (!cartContent.data?.products?.length) return <EmptyCart />
+
     const updateCartItem = async (productId: string, count: number) => {
         if (count < 1) return;
         setUpdatingId(productId);
@@ -27,6 +34,7 @@ export default function Cart() {
         if (data.status === 'success') setCartContent(data);
         setUpdatingId(null);
     };
+
     const removeCartItem = async (productId: string) => {
         setRemovingId(productId);
         const data = await removeFromCartAction(productId);
@@ -38,7 +46,7 @@ export default function Cart() {
     };
 
     return (
-        <div className="container mx-auto py-14 px-4 max-w-7xl">
+        <div className="container mx-auto py-14 px-4 max-w-7xl animate-in fade-in duration-500">
             <header className="mb-12 border-b-4 border-slate-900 pb-8">
                 <h1 className="text-5xl font-black uppercase italic">Shopping Bag</h1>
                 <p className="text-slate-400 mt-2 font-bold uppercase text-xs">

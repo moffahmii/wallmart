@@ -1,12 +1,14 @@
+import getUserToken from "@/app/helpers/getUserToken"
 import { CartResponse } from "@/interfaces"
 import { NextResponse } from "next/server"
 
 export async function GET() {
+    const token = await getUserToken()
     const response = await fetch(
-        'https://ecommerce.routemisr.com/api/v1/cart',
+        `${process.env.API_URL}/cart`,
         {
             headers: {
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzRmOTdjZmM5YTIxZTBlNjUxODViNiIsIm5hbWUiOiJNb2hhbWVkIEZhaG1pIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjkzNzA5MTMsImV4cCI6MTc3NzE0NjkxM30.SlvFLZd5Y6RqTOIyAu_W3N217XTdayTcEWJ3uUBx3yw"
+                token: token!
             },
         })
     const data: CartResponse = await response.json()
