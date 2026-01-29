@@ -10,26 +10,19 @@ export default function AllOrders() {
     const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
-        // 1. استخراج الـ User ID الحقيقي (بنجرب الـ id والـ _id)
         const userData = session?.user as any;
         const userId = userData?._id || userData?.id;
-
         console.log("Status:", status);
         console.log("Full User Data from Session:", userData);
         console.log("Extracted User ID:", userId);
-
         if (status === "authenticated" && userId) {
             const fetchOrders = async () => {
                 try {
                     setIsLoading(true);
-                    const res = await fetch(`https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`);
-
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/user/${userId}`);
                     if (!res.ok) throw new Error("Could not fetch orders from server");
-
                     const data = await res.json();
                     console.log("Orders received:", data);
-
-                    // التأكد أن الداتا مصفوفة (Array)
                     setOrders(Array.isArray(data) ? data : []);
                 } catch (err: any) {
                     console.error("Fetch Error:", err);
@@ -43,13 +36,11 @@ export default function AllOrders() {
             setIsLoading(false);
             setError("You must be logged in to view orders.");
         } else if (status === "authenticated" && !userId) {
-            // لو اليوزر مسجل دخول بس الـ ID مش واصل للسشن
             setIsLoading(false);
             setError("User ID not found in session. Check auth configuration.");
         }
     }, [status, session]);
 
-    // حالة التحميل
     if (isLoading) {
         return (
             <div className="flex h-screen flex-col items-center justify-center gap-4">

@@ -6,7 +6,7 @@ import React from 'react'
 
 export default async function Brands() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/brands`, {
-        next: { revalidate: 3600 } // تحديث كل ساعة لزيادة الأداء
+        next: { revalidate: 3600 }
     })
     const { data: brands }: { data: BrandI[] } = await response.json()
 

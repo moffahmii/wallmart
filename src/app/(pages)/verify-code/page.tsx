@@ -26,7 +26,6 @@ type VerifyFields = z.infer<typeof verifySchema>
 
 export default function VerifyCode() {
     const [isLoading, setIsLoading] = useState(false)
-    // ✅ State لإدارة الرسائل المدمجة
     const [serverMessage, setServerMessage] = useState<{ type: 'error' | 'success', text: string } | null>(null)
     const router = useRouter()
 
