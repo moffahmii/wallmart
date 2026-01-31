@@ -11,7 +11,6 @@ import { CartContext } from '@/components/context/cartContext'
 export default function Cart() {
     const context = useContext(CartContext)
     if (!context) {
-        console.error("CartContext must be used within a CartContextProvider");
         return null;
     }
 

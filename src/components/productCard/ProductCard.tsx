@@ -4,7 +4,7 @@ import { ProductI } from '@/interfaces'
 import Mystar from '@/components/ui/mystar'
 import Link from 'next/link'
 import AddToCart from '@/components/addtoCart/addToCart'
-import WishlistButton from "../../app/(pages)/wishlist/wishlistButtons/page"
+import WishlistButton from "@/app/(pages)/wishlist/wishlistButtons/page"
 
 export function ProductCard({ product, isFavorite = false }: { product: ProductI, isFavorite?: boolean }) {
     return (

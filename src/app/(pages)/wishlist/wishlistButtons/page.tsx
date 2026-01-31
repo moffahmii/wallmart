@@ -1,16 +1,16 @@
 'use client'
+
 import { useState, useTransition } from 'react'
 import { Heart, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
-import { addToWishlist, removeFromWishlist } from '@/app/(pages)/wishlist/_actions/wishlist.actions'
+import { addToWishlist, removeFromWishlist } from '../_actions/wishlist.actions'
 
-export default function WishlistButton({
-    productId,
-    isFavoriteInitial
-}: {
-    productId: string,
-    isFavoriteInitial: boolean
-}) {
+interface WishlistButtonProps {
+    productId: string;
+    isFavoriteInitial: boolean;
+}
+
+export default function WishlistButton({ productId, isFavoriteInitial }: WishlistButtonProps) {
     const [isFavorite, setIsFavorite] = useState(isFavoriteInitial)
     const [isPending, startTransition] = useTransition()
 
@@ -18,33 +18,31 @@ export default function WishlistButton({
         e.preventDefault()
         e.stopPropagation()
 
-        if (isPending) return;
+        if (isPending) return
 
         startTransition(async () => {
             try {
                 if (isFavorite) {
+                    // منطق الحذف
                     const res = await removeFromWishlist(productId)
-
-                    if (res?.status !== 'success') {
-                        toast.error("Please login first")
-                        return
+                    if (res?.status === 'success') {
+                        setIsFavorite(false)
+                        toast.error('Removed from vault', { icon: '💔' })
+                    } else {
+                        toast.error('Authentication required')
                     }
-
-                    setIsFavorite(false)
-                    toast.error("Removed from Vault", { icon: "💔" })
                 } else {
+                    // منطق الإضافة
                     const res = await addToWishlist(productId)
-
-                    if (res?.status !== 'success') {
-                        toast.error("Please login first")
-                        return
+                    if (res?.status === 'success') {
+                        setIsFavorite(true)
+                        toast.success('Added to vault', { icon: '❤️' })
+                    } else {
+                        toast.error('Authentication required')
                     }
-
-                    setIsFavorite(true)
-                    toast.success("Added to Vault", { icon: "❤️" })
                 }
             } catch {
-                toast.error("Something went wrong")
+                toast.error('Process failed. Try again.')
             }
         })
     }
@@ -54,22 +52,18 @@ export default function WishlistButton({
             onClick={handleToggle}
             disabled={isPending}
             className={`
-                group flex items-center justify-center p-2.5 rounded-xl border-2 transition-all duration-300
-                ${isFavorite
-                    ? 'bg-red-50 border-red-500 shadow-[4px_4px_0px_0px_rgba(239,68,68,1)]'
-                    : 'bg-white border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1'}
-                active:scale-90 disabled:opacity-70
+                flex items-center justify-center p-2.5 transition-all duration-300
+                rounded-(--radius) border border-border
+                ${isFavorite 
+                    ? 'bg-destructive/10 text-destructive border-destructive/20' 
+                    : 'bg-secondary/50 text-foreground hover:border-primary/30'}
+                active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed
             `}
         >
             {isPending ? (
-                <Loader2 className="size-5 animate-spin text-slate-400" />
+                <Loader2 className="size-4 animate-spin" />
             ) : (
-                <Heart
-                    className={`size-5 transition-all duration-300 ${isFavorite
-                            ? 'fill-red-500 text-red-500 scale-110'
-                            : 'text-slate-900 group-hover:text-red-500'
-                        }`}
-                />
+                <Heart className={`size-4 ${isFavorite ? 'fill-current' : ''}`} />
             )}
         </button>
     )

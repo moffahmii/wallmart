@@ -17,7 +17,7 @@ export default function SidebarFilter({
     const handleFilter = (key: string, value: string) => {
         const params = new URLSearchParams(searchParams.toString())
         if (params.get(key) === value) {
-            params.delete(key) // إلغاء الفلتر إذا ضغطت عليه مرة أخرى
+            params.delete(key) 
         } else {
             params.set(key, value)
         }

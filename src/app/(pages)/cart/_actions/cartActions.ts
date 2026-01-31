@@ -1,6 +1,7 @@
 'use server'
 
 import getUserToken from "@/app/helpers/getUserToken";
+import { revalidateTag } from "next/cache";
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/cart`;
 
@@ -12,23 +13,21 @@ async function getAuthHeaders() {
     };
 }
 
-
 export async function getCartAction() {
     try {
         const headers = await getAuthHeaders();
         const res = await fetch(BASE_URL, {
             method: 'GET',
             headers,
-            next: { tags: ['cart'] } 
+            next: { tags: ['cart'] }
         });
-        if (!res.ok) throw new Error("Failed to fetch cart");
-        return await res.json();
+        if (res.status === 404) return { status: 'success', numOfCartItems: 0, data: { products: [] } };
+        const data = await res.json();
+        return res.ok ? data : { status: 'error', message: data.message };
     } catch (error) {
-        console.error("Get Cart Action Error:", error);
-        return { status: 'error', message: 'Could not retrieve cart data' };
+        return { status: 'error', message: 'Network connection failed' };
     }
 }
-
 
 export async function updateCartAction(productId: string, count: number) {
     try {
@@ -39,13 +38,12 @@ export async function updateCartAction(productId: string, count: number) {
             body: JSON.stringify({ count })
         });
         const data = await res.json();
+        if (res.ok) revalidateTag('cart', '');
         return data;
     } catch (error) {
-        console.error("Update Cart Action Error:", error);
-        return { status: 'error', message: 'Failed to update item count' };
+        return { status: 'error' };
     }
 }
-
 
 export async function removeFromCartAction(productId: string) {
     try {
@@ -55,25 +53,9 @@ export async function removeFromCartAction(productId: string) {
             headers
         });
         const data = await res.json();
+        if (res.ok) revalidateTag('cart', '');
         return data;
     } catch (error) {
-        console.error("Remove From Cart Action Error:", error);
-        return { status: 'error', message: 'Failed to remove item' };
-    }
-}
-
-
-export async function clearCartAction() {
-    try {
-        const headers = await getAuthHeaders();
-        const res = await fetch(BASE_URL, {
-            method: 'DELETE',
-            headers
-        });
-        const data = await res.json();
-        return data;
-    } catch (error) {
-        console.error("Clear Cart Action Error:", error);
-        return { status: 'error', message: 'Failed to clear cart' };
+        return { status: 'error' };
     }
 }

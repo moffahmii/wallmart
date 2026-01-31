@@ -36,6 +36,8 @@ export const authOptions: AuthOptions = {
             if (user) {
                 token.user = (user as any).user;
                 token.token = (user as any).token;
+                // استخراج الـ ID من كائن اليوزر وتخزينه في الـ token مباشرة
+                token.sub = (user as any).user._id;
             }
             return token;
         },
@@ -43,6 +45,8 @@ export const authOptions: AuthOptions = {
             if (token) {
                 session.user = token.user as any;
                 (session as any).token = token.token;
+                // ربط الـ ID بالسيشن لتقرأه صفحة allorders
+                (session.user as any).id = token.sub;
             }
             return session;
         },

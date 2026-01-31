@@ -1,111 +1,134 @@
-'use client'
-import React, { useRef } from 'react'
+"use client"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+import { CreditCard, Banknote, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { CreditCard, Banknote, Loader2 } from 'lucide-react'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
-import getUserToken from '@/app/helpers/getUserToken'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog"
+import { getAddressesAction } from "@/app/(pages)/profile/_actions/Profile.actions"
+import getUserToken from "@/app/helpers/getUserToken"
 
 export default function CheckOut({ cartId }: { cartId: string }) {
-    const { data: session } = useSession()
+    const [addresses, setAddresses] = useState([])
+    const [selectedAddress, setSelectedAddress] = useState<any>(null)
+    const [isPending, setIsPending] = useState(false)
     const router = useRouter()
 
-    const detailsInput = useRef<HTMLInputElement | null>(null)
-    const cityInput = useRef<HTMLInputElement | null>(null)
-    const phoneInput = useRef<HTMLInputElement | null>(null)
-    async function checkOutSession() {
-        const token = await getUserToken()
-        const shippingAddress = {
-            details: detailsInput.current?.value,
-            city: cityInput.current?.value,
-            phone: phoneInput.current?.value
-        }
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/orders/checkout-session/${cartId}?url=${process.env.NEXT_PUBLIC_URL}`,
-            {
+    useEffect(() => {
+        getAddressesAction().then(res => setAddresses(res.data || []))
+    }, [])
+
+    const handleCheckOut = async (method: 'visa' | 'cash') => {
+        if (!cartId) return toast.error("Active cart not found. Please add items first.")
+        if (!selectedAddress) return toast.error("Please select a shipping address")
+
+        setIsPending(true)
+
+        try {
+            const token = await getUserToken()
+            const baseUrl = "https://ecommerce.routemisr.com/api/v1"
+            const url = method === 'visa'
+                ? `${baseUrl}/orders/checkout-session/${cartId}?url=${window.location.origin}`
+                : `${baseUrl}/orders/${cartId}`
+
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
-                    token: token!,
-                    'content-type': 'application/json'
+                    "token": token!,
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ shippingAddress })
+                body: JSON.stringify({
+                    shippingAddress: {
+                        details: selectedAddress.details,
+                        city: selectedAddress.city,
+                        phone: selectedAddress.phone
+                    }
+                })
+            })
+
+            const data = await response.json()
+
+            if (response.ok && data.status === 'success') {
+                if (method === 'visa') {
+                    window.location.href = data.session.url
+                } else {
+                    toast.success("Order Created Successfully!")
+                    router.push('/allorders')
+                }
+            } else {
+                toast.error(data.message || "Failed to process order. Your cart might be empty.")
             }
-        )
-        const data = await response.json()
-        if (data.status === 'success') {
-            window.location.href = data.session.url
-        }
-    }
-    async function createCashOrder() {
-        const shippingAddress = {
-            details: detailsInput.current?.value,
-            city: cityInput.current?.value,
-            phone: phoneInput.current?.value
-        }
-        const token = await getUserToken()
-        const response = await fetch(
-            `${process.env.API_URL}/orders/${cartId}`,
-            {
-                method: "POST",
-                headers: {
-                    token: token!,
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({ shippingAddress })
-            }
-        )
-        const data = await response.json()
-        if (data.status === 'success') {
-            toast.success("Order Created Successfully!")
-            router.push(`/allorders`)
+        } catch (error) {
+            toast.error("Network error. Please try again later.")
+        } finally {
+            setIsPending(false)
         }
     }
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className='w-full cursor-pointer text-lg font-black uppercase italic bg-blue-600 hover:bg-blue-700 h-14 rounded-2xl shadow-lg shadow-blue-100 mt-4'>
+                <Button className="w-full h-14 rounded-2xl bg-blue-600 font-black uppercase italic shadow-xl hover:bg-blue-700 transition-all">
                     Proceed to Checkout
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md rounded-[32px]">
-                <DialogHeader>
-                    <DialogTitle className="text-2xl font-black uppercase italic">Shipping Address</DialogTitle>
-                    <DialogDescription className="font-bold text-slate-400">Where should we deliver your order?</DialogDescription>
+
+            <DialogContent className="rounded-[2.5rem] p-10 max-w-lg bg-white border-none shadow-2xl">
+                <DialogHeader className="text-center">
+                    <DialogTitle className="text-3xl font-black uppercase italic tracking-tighter">
+                        Shipping
+                    </DialogTitle>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="space-y-2">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">City</Label>
-                        <Input id="city" ref={cityInput} placeholder="Cairo" className="rounded-xl h-12" />
-                    </div>
-                    <div className="space-y-2">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Phone</Label>
-                        <Input id="phone" ref={phoneInput} placeholder="01xxxxxxxxx" className="rounded-xl h-12" />
-                    </div>
-                    <div className="space-y-2">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Full Details</Label>
-                        <Input id="details" ref={detailsInput} placeholder="Street, Building, Flat" className="rounded-xl h-12" />
+
+                <div className="py-6 space-y-4">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 pl-2">
+                        Select From Saved Addresses
+                    </span>
+
+                    <div className="grid gap-3 max-h-62.5 overflow-y-auto pr-2 custom-scrollbar">
+                        {addresses.length > 0 ? (
+                            addresses.map((addr: any) => (
+                                <div
+                                    key={addr._id}
+                                    onClick={() => setSelectedAddress(addr)}
+                                    className={`p-5 rounded-2xl border-2 transition-all cursor-pointer ${selectedAddress?._id === addr._id
+                                            ? 'border-blue-600 bg-blue-50/50 shadow-md'
+                                            : 'border-slate-100 hover:border-slate-200 bg-white'
+                                        }`}
+                                >
+                                    <p className="font-black text-slate-900 italic uppercase tracking-tighter leading-none">
+                                        {addr.name}
+                                    </p>
+                                    <p className="text-xs font-medium text-slate-500 mt-1 truncate">
+                                        {addr.city} • {addr.details}
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-center py-4 text-slate-400 italic font-bold">
+                                No addresses found. Add one in profile.
+                            </p>
+                        )}
                     </div>
                 </div>
-                <DialogFooter className="flex-col sm:flex-row gap-2">
-                    <Button onClick={checkOutSession} className="flex-1 h-12 rounded-xl font-black uppercase italic bg-slate-900">
-                        <CreditCard className="mr-2" /> Visa
+
+                <DialogFooter className="flex-row gap-3">
+                    <Button
+                        disabled={isPending || !selectedAddress}
+                        onClick={() => handleCheckOut('visa')}
+                        className="flex-1 h-14 rounded-2xl bg-slate-950 font-black uppercase italic"
+                    >
+                        {isPending ? <Loader2 className="animate-spin" /> : <><CreditCard className="mr-2" /> Visa</>}
                     </Button>
-                    <Button onClick={createCashOrder} variant="outline" className="flex-1 h-12 rounded-xl font-black uppercase italic border-2">
-                        <Banknote className="mr-2 text-green-600" /> Cash
+
+                    <Button
+                        disabled={isPending || !selectedAddress}
+                        onClick={() => handleCheckOut('cash')}
+                        variant="outline"
+                        className="flex-1 h-14 rounded-2xl border-2 border-slate-950 font-black uppercase italic"
+                    >
+                        {isPending ? <Loader2 className="animate-spin" /> : <><Banknote className="mr-2 text-green-600" /> Cash</>}
                     </Button>
                 </DialogFooter>
             </DialogContent>

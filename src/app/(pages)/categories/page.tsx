@@ -19,6 +19,7 @@ export default async function Categories() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {categories?.map((category) => (
+                    <Link key={category._id} href={`/categories/${category._id}`}>
                         <Card key={category._id} className="h-full border-none shadow-md hover:shadow-2xl transition-all duration-500 rounded-[32px] overflow-hidden bg-white">
                             <div className="relative aspect-4/5 w-full overflow-hidden bg-slate-100">
                                 <Image
@@ -40,6 +41,7 @@ export default async function Categories() {
                                 </CardTitle>
                             </div>
                         </Card>
+                    </Link>
                 ))}
             </div>
         </main>

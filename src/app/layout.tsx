@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/sonner"
 import CartContextProvider from "@/components/context/cartContext";
 import Footer from "@/components/footer/Footer";
 import MySessionProvider from "@/components/mySessionProvider/MySessionProvider";
-import WishlistFloatButton from "@/app/(pages)/wishlist/wishlistButtons/WishlistFloatButton";
+import WishlistFloatButton from "./(pages)/wishlist/wishlistButtons/WishlistFloatButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
