@@ -15,7 +15,6 @@ export default async function ProfilePage() {
     const userId = (session?.user as any)?.id
     const user = session?.user
 
-    // جلب البيانات بشكل متوازي لسرعة الأداء
     const [addressesData, orders] = await Promise.all([
         getAddressesAction(),
         getUserOrdersAction(userId)
@@ -27,7 +26,6 @@ export default async function ProfilePage() {
         <main className="min-h-screen bg-white selection:bg-slate-900 selection:text-white">
             <div className="container mx-auto py-16 px-6 max-w-7xl">
 
-                {/* 1. Header Section with Dynamic Stats */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
                     <div className="space-y-2">
                         <div className="flex items-center gap-2 mb-4">
@@ -55,7 +53,6 @@ export default async function ProfilePage() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-                    {/* 2. Sidebar with Identity Management */}
                     <aside className="lg:col-span-4 xl:col-span-3 space-y-6">
                         <Card className="rounded-[3rem] border-none bg-slate-50/50 shadow-xs overflow-hidden sticky top-24">
                             <div className="relative h-32 bg-slate-900 overflow-hidden">
@@ -77,14 +74,9 @@ export default async function ProfilePage() {
                                         {user?.email}
                                     </p>
                                 </div>
-
                                 <div className="space-y-3">
-                                    {/* Edit Profile Modal (Identity Management) */}
                                     <EditProfileModal user={user} />
-
-                                    {/* Security Settings Modal (Password Change) */}
                                     <SecuritySettingsModal />
-
                                     <div className="grid grid-cols-2 gap-2">
                                         <div className="p-3 bg-white rounded-2xl border border-slate-100 flex flex-col items-center justify-center gap-1 hover:border-blue-100 transition-colors cursor-default group">
                                             <ShieldCheck className="size-4 text-slate-300 group-hover:text-blue-500 transition-colors" />
@@ -99,8 +91,6 @@ export default async function ProfilePage() {
                             </CardContent>
                         </Card>
                     </aside>
-
-                    {/* 3. Main Interface Section */}
                     <div className="lg:col-span-8 xl:col-span-9">
                         <Tabs defaultValue="addresses" className="w-full">
                             <TabsList className="bg-slate-50 p-2 rounded-[2.5rem] mb-12 w-full md:w-fit border border-slate-100 shadow-inner inline-flex">
@@ -111,8 +101,6 @@ export default async function ProfilePage() {
                                     <Package className="size-3 mr-2 group-data-[state=active]:text-blue-600" /> Order History
                                 </TabsTrigger>
                             </TabsList>
-
-                            {/* Addresses Tab */}
                             <TabsContent value="addresses" className="mt-0 focus-visible:outline-none animate-in fade-in slide-in-from-bottom-4 duration-700">
                                 <div className="flex items-center justify-between mb-10 pl-2">
                                     <div className="space-y-1">
@@ -121,7 +109,6 @@ export default async function ProfilePage() {
                                     </div>
                                     <AddAddressModal />
                                 </div>
-
                                 {addresses.length > 0 ? (
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         {addresses.map((addr: any) => (
@@ -137,8 +124,6 @@ export default async function ProfilePage() {
                                     </div>
                                 )}
                             </TabsContent>
-
-                            {/* Orders Tab */}
                             <TabsContent value="orders" className="mt-0 focus-visible:outline-none animate-in fade-in slide-in-from-bottom-4 duration-700">
                                 <div className="mb-10 pl-2 space-y-1">
                                     <h3 className="text-3xl font-black text-slate-900 uppercase italic tracking-tighter">Manifest History</h3>
@@ -148,7 +133,6 @@ export default async function ProfilePage() {
                             </TabsContent>
                         </Tabs>
                     </div>
-
                 </div>
             </div>
         </main>

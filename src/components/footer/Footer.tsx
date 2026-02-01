@@ -2,155 +2,177 @@
 import React from 'react'
 import Link from 'next/link'
 import {
-    Facebook,
-    Twitter,
-    Instagram,
-    Youtube,
-    Mail,
-    Phone,
-    MapPin,
-    Send,
-    ArrowUpRight
+  Facebook,
+  Twitter,
+  Instagram,
+  Youtube,
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  ArrowUpRight
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 
 export default function Footer() {
-    const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear()
 
-    const footerLinks = {
-        shop: [
-            { name: 'All Products', href: '/products' },
-            { name: 'Featured Brands', href: '/brands' },
-            { name: 'Categories', href: '/categories' },
-            { name: 'New Arrivals', href: '/new' },
-        ],
-        support: [
-            { name: 'Help Center', href: '/help' },
-            { name: 'Track Order', href: '/track' },
-            { name: 'Shipping Policy', href: '/shipping' },
-            { name: 'Return Policy', href: '/returns' },
-        ],
-        company: [
-            { name: 'About WallMart', href: '/about' },
-            { name: 'Careers', href: '/careers' },
-            { name: 'Privacy Policy', href: '/privacy' },
-            { name: 'Terms of Service', href: '/terms' },
-        ]
-    }
+  const footerLinks = {
+    shop: [
+      { name: 'All Products', href: '/products' },
+      { name: 'Featured Brands', href: '/brands' },
+      { name: 'Categories', href: '/categories' },
+      { name: 'New Arrivals', href: '/new' },
+    ],
+    support: [
+      { name: 'Help Center', href: '/help' },
+      { name: 'Track Order', href: '/track' },
+      { name: 'Shipping Policy', href: '/shipping' },
+      { name: 'Return Policy', href: '/returns' },
+    ],
+    company: [
+      { name: 'About WallMart', href: '/about' },
+      { name: 'Careers', href: '/careers' },
+      { name: 'Privacy Policy', href: '/privacy' },
+      { name: 'Terms of Service', href: '/terms' },
+    ]
+  }
 
-    return (
-        <footer className="bg-slate-50 border-t">
-            <div className="container mx-auto px-4 py-16">
+  return (
+    <footer className="bg-slate-50 border-t">
+      <div className="container mx-auto px-4 py-12">
 
-                {/* --- Top Section: Newsletter --- */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16 items-center">
-                    <div className="lg:col-span-2 space-y-4">
-                        <h2 className="text-3xl font-black tracking-tight">Join our newsletter</h2>
-                        <p className="text-muted-foreground text-lg max-w-md">
-                            Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.
-                        </p>
-                    </div>
-                    <div className="flex gap-2">
-                        <Input
-                            placeholder="Enter your email"
-                            className="h-12 bg-white rounded-xl border-2 focus-visible:ring-blue-600"
-                        />
-                        <Button className="h-12 px-6 rounded-xl font-bold bg-blue-600 hover:bg-blue-700">
-                            <Send className="mr-2 h-4 w-4" /> Subscribe
-                        </Button>
-                    </div>
-                </div>
+        {/* Newsletter */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12 items-center">
+          <div className="lg:col-span-2 space-y-2">
+            <h2 className="text-2xl font-black tracking-tight">
+              Join our newsletter
+            </h2>
+            <p className="text-muted-foreground text-sm max-w-md">
+              Get offers & updates straight to your inbox.
+            </p>
+          </div>
 
-                <Separator className="mb-16 bg-slate-200" />
+          <div className="flex gap-2">
+            <Input
+              placeholder="Email address"
+              className="h-10 rounded-lg border"
+            />
+            <Button className="h-10 px-4 rounded-lg font-bold bg-blue-600 hover:bg-blue-700">
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
 
-                {/* --- Middle Section: Links & Info --- */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+        <Separator className="mb-12" />
 
-                    {/* Brand Column */}
-                    <div className="lg:col-span-2 space-y-6">
-                        <Link href="/" className="inline-block">
-                            <span className="text-3xl font-black tracking-tighter bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                                WallMart
-                            </span>
-                        </Link>
-                        <p className="text-muted-foreground text-lg leading-relaxed max-w-sm font-medium">
-                            The ultimate destination for all your shopping needs. We provide quality, speed, and trust in every order.
-                        </p>
-                        <div className="flex gap-4">
-                            {[Facebook, Instagram, Twitter, Youtube].map((Icon, i) => (
-                                <Button key={i} variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-blue-600 hover:text-blue-600 transition-all">
-                                    <Icon className="h-5 w-5" />
-                                </Button>
-                            ))}
-                        </div>
-                    </div>
+        {/* Links */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
 
-                    {/* Links Columns */}
-                    <div>
-                        <h3 className="font-black text-lg mb-6 uppercase tracking-wider">Shop</h3>
-                        <ul className="space-y-4">
-                            {footerLinks.shop.map((link) => (
-                                <li key={link.name}>
-                                    <Link href={link.href} className="text-muted-foreground hover:text-blue-600 font-medium transition-colors flex items-center group">
-                                        {link.name} <ArrowUpRight className="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+          {/* Brand */}
+          <div className="lg:col-span-2 space-y-4">
+            <Link href="/">
+              <span className="text-2xl font-black tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                WallMart
+              </span>
+            </Link>
 
-                    <div>
-                        <h3 className="font-black text-lg mb-6 uppercase tracking-wider">Support</h3>
-                        <ul className="space-y-4">
-                            {footerLinks.support.map((link) => (
-                                <li key={link.name}>
-                                    <Link href={link.href} className="text-muted-foreground hover:text-blue-600 font-medium transition-colors flex items-center group">
-                                        {link.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
+              Quality products, fast delivery, and trusted service every time.
+            </p>
 
-                    {/* Contact Info */}
-                    <div className="space-y-6">
-                        <h3 className="font-black text-lg mb-6 uppercase tracking-wider">Contact Us</h3>
-                        <div className="space-y-4">
-                            <div className="flex items-start gap-3">
-                                <MapPin className="h-5 w-5 text-blue-600 shrink-0" />
-                                <span className="text-muted-foreground font-medium text-sm">123 Business St, Cairo, Egypt</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <Phone className="h-5 w-5 text-blue-600 shrink-0" />
-                                <span className="text-muted-foreground font-medium text-sm">+20 123 456 789</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <Mail className="h-5 w-5 text-blue-600 shrink-0" />
-                                <span className="text-muted-foreground font-medium text-sm">support@wallmart.com</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <Separator className="my-16 bg-slate-200" />
-
-                {/* --- Bottom Section: Copyright --- */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-muted-foreground font-medium text-sm">
-                        © {currentYear} <span className="text-foreground font-bold">WallMart</span>. All rights reserved.
-                    </p>
-
-                    {/* Payment Icons Placeholder */}
-                    <div className="flex items-center gap-4 opacity-60">
-                        <div className="h-8 w-12 bg-slate-200 rounded-md"></div>
-                        <div className="h-8 w-12 bg-slate-200 rounded-md"></div>
-                        <div className="h-8 w-12 bg-slate-200 rounded-md"></div>
-                        <div className="h-8 w-12 bg-slate-200 rounded-md"></div>
-                    </div>
-                </div>
+            <div className="flex gap-3">
+              {[Facebook, Instagram, Twitter, Youtube].map((Icon, i) => (
+                <Button
+                  key={i}
+                  variant="outline"
+                  size="icon"
+                  className="h-9 w-9 rounded-full hover:text-blue-600 hover:border-blue-600"
+                >
+                  <Icon className="h-4 w-4" />
+                </Button>
+              ))}
             </div>
-        </footer>
-    )
+          </div>
+
+          {/* Shop */}
+          <div>
+            <h3 className="font-black text-sm mb-4 uppercase tracking-wider">
+              Shop
+            </h3>
+            <ul className="space-y-3">
+              {footerLinks.shop.map(link => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-blue-600 flex items-center group"
+                  >
+                    {link.name}
+                    <ArrowUpRight className="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Support */}
+          <div>
+            <h3 className="font-black text-sm mb-4 uppercase tracking-wider">
+              Support
+            </h3>
+            <ul className="space-y-3">
+              {footerLinks.support.map(link => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-blue-600"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="font-black text-sm mb-4 uppercase tracking-wider">
+              Contact
+            </h3>
+            <div className="space-y-3 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-blue-600" />
+                Cairo, Egypt
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-blue-600" />
+                +20 123 456 789
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-blue-600" />
+                support@wallmart.com
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Separator className="my-10" />
+
+        {/* Bottom */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-muted-foreground">
+            © {currentYear} <span className="font-bold text-foreground">WallMart</span>. All rights reserved.
+          </p>
+
+          <div className="flex gap-3 opacity-50">
+            <div className="h-7 w-10 bg-slate-200 rounded"></div>
+            <div className="h-7 w-10 bg-slate-200 rounded"></div>
+            <div className="h-7 w-10 bg-slate-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
 }

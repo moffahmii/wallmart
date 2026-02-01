@@ -48,7 +48,6 @@ export default function AddressForm({
 
     return (
         <form onSubmit={onSubmit} className="space-y-5 pt-4">
-            {/* Label Field */}
             <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 pl-1">
                     Address Label
@@ -61,8 +60,6 @@ export default function AddressForm({
                     className="rounded-xl h-12 border-slate-100 bg-slate-50/50 focus:bg-white transition-colors"
                 />
             </div>
-
-            {/* City & Phone Grid */}
             <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                     <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 pl-1">
@@ -89,8 +86,6 @@ export default function AddressForm({
                     />
                 </div>
             </div>
-
-            {/* Details Field */}
             <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 pl-1">
                     Full Details
@@ -103,8 +98,6 @@ export default function AddressForm({
                     className="rounded-xl h-12 border-slate-100 bg-slate-50/50 focus:bg-white transition-colors"
                 />
             </div>
-
-            {/* Action Button */}
             <Button
                 disabled={isLoading}
                 className="w-full h-12 rounded-xl bg-slate-950 hover:bg-blue-600 font-bold uppercase italic tracking-tighter transition-all duration-300 mt-2 shadow-lg shadow-slate-200"

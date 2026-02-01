@@ -10,7 +10,6 @@ interface CartItemProps {
 }
 
 export function CartItem({ item, updatingId, removingId, onUpdate, onRemove }: CartItemProps) {
-    // 1. حماية أولية: لو الـ item أو الـ product مش موجودين، متبنيش المكون
     if (!item?.product) return null;
 
     const isUpdating = updatingId === item.product._id;
@@ -18,8 +17,6 @@ export function CartItem({ item, updatingId, removingId, onUpdate, onRemove }: C
 
     return (
         <div className="group relative rounded-[32px] border-4 border-slate-900 bg-white p-6 flex flex-col sm:flex-row gap-8 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all duration-300">
-
-            {/* الصورة مع حماية */}
             <div className="h-40 w-40 shrink-0 rounded-2xl border-4 border-slate-100 bg-slate-50 overflow-hidden p-2">
                 <img
                     src={item.product?.imageCover || ''} 
@@ -27,11 +24,9 @@ export function CartItem({ item, updatingId, removingId, onUpdate, onRemove }: C
                     className="h-full w-full object-contain group-hover:scale-110 transition-transform duration-500"
                 />
             </div>
-
             <div className="flex flex-1 flex-col justify-between py-2">
                 <div className="space-y-2">
                     <div className="flex justify-between items-start gap-4">
-                        {/* استخدام Optional Chaining لضمان عدم حدوث Crash */}
                         <h3 className="text-xl font-black uppercase italic leading-tight line-clamp-2">
                             {item.product?.title || "Untitled Product"}
                         </h3>
@@ -39,12 +34,10 @@ export function CartItem({ item, updatingId, removingId, onUpdate, onRemove }: C
                             {(item.price || 0).toLocaleString()} <span className="text-[10px]">EGP</span>
                         </p>
                     </div>
-                    {/* الحماية هنا هي الأهم لأن الـ brand غالباً بيكون undefined في البداية */}
                     <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest italic">
                         {item.product?.brand?.name || "No Brand"}
                     </p>
                 </div>
-
                 <div className="flex items-center justify-between mt-8">
                     <div className="flex items-center gap-3 bg-slate-100 border-2 border-slate-900 rounded-2xl p-1 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]">
                         <Button
@@ -69,7 +62,6 @@ export function CartItem({ item, updatingId, removingId, onUpdate, onRemove }: C
                             <Plus className="h-4 w-4" />
                         </Button>
                     </div>
-
                     <Button
                         variant="ghost"
                         size="sm"

@@ -23,7 +23,6 @@ export default function WishlistButton({ productId, isFavoriteInitial }: Wishlis
         startTransition(async () => {
             try {
                 if (isFavorite) {
-                    // منطق الحذف
                     const res = await removeFromWishlist(productId)
                     if (res?.status === 'success') {
                         setIsFavorite(false)
@@ -32,7 +31,6 @@ export default function WishlistButton({ productId, isFavoriteInitial }: Wishlis
                         toast.error('Authentication required')
                     }
                 } else {
-                    // منطق الإضافة
                     const res = await addToWishlist(productId)
                     if (res?.status === 'success') {
                         setIsFavorite(true)

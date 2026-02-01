@@ -43,7 +43,6 @@ export default function VerifyCode() {
         
         if (result.success) {
             setServerMessage({ type: 'success', text: "Code verified! Redirecting to reset page..." })
-            // تأخير بسيط لمنح المستخدم فرصة لقراءة رسالة النجاح
             setTimeout(() => router.push("/reset-password"), 1500)
         } else {
             setServerMessage({ type: 'error', text: result.error || "Invalid or expired code. Please try again." })
@@ -55,7 +54,6 @@ export default function VerifyCode() {
         <div className="flex flex-col justify-center items-center min-h-[85vh] px-4">
             <div className="w-full max-w-md">
                 <div className="border-none shadow-2xl rounded-[32px] overflow-hidden bg-white">
-                    {/* Header */}
                     <div className="bg-slate-50/80 p-10 text-center space-y-3 border-b">
                         <div className="mx-auto w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-200">
                             <ShieldCheck size={32} />
@@ -67,7 +65,6 @@ export default function VerifyCode() {
                     </div>
 
                     <div className="p-8">
-                        {/* ✅ عرض رسالة السيرفر فوق الحقول */}
                         {serverMessage && (
                             <div className={`mb-6 p-4 rounded-2xl border-2 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300 ${
                                 serverMessage.type === 'success' 

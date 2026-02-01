@@ -5,7 +5,7 @@ import CheckOut from '@/components/checkOut/checkOut'
 import Link from 'next/link'
 
 export function CartSummary({ total, cartId }: { total: number, cartId: string }) {
-    console.log("Current Cart ID:", cartId); // 👈 لوعايز تتأكد من الـ ID هنا
+    console.log("Current Cart ID:", cartId); 
     return (
         <aside className="lg:col-span-4 lg:sticky lg:top-24 h-fit">
             <div className="rounded-[40px] border-4 border-slate-900 bg-white p-10 space-y-8 shadow-[12px_12px_0px_0px_rgba(15,23,42,1)]">

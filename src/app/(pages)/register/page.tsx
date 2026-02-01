@@ -72,7 +72,6 @@ export default function Register() {
                     <div className="p-8">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                                {/* Name */}
                                 <FormField control={form.control} name="name" render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-[10px] font-black uppercase text-slate-500 flex justify-between">Name {touchedFields.name && !errors.name && <CheckCircle2 className="size-3 text-green-500" />}</FormLabel>
@@ -86,7 +85,6 @@ export default function Register() {
                                         <FormMessage className="text-[10px] italic font-bold" />
                                     </FormItem>
                                 )} />
-                                {/* Email */}
                                 <FormField control={form.control} name="email" render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-[10px] font-black uppercase text-slate-500 flex justify-between">Email {touchedFields.email && !errors.email && <CheckCircle2 className="size-3 text-green-500" />}</FormLabel>
@@ -99,8 +97,6 @@ export default function Register() {
                                         <FormMessage className="text-[10px] italic font-bold" />
                                     </FormItem>
                                 )} />
-
-                                {/* Phone */}
                                 <FormField control={form.control} name="phone" render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-[10px] font-black uppercase text-slate-500 flex justify-between">Phone {touchedFields.phone && !errors.phone && <CheckCircle2 className="size-3 text-green-500" />}</FormLabel>
@@ -113,8 +109,6 @@ export default function Register() {
                                         <FormMessage className="text-[10px] italic font-bold" />
                                     </FormItem>
                                 )} />
-
-                                {/* Password */}
                                 <FormField control={form.control} name="password" render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-[10px] font-black uppercase text-slate-500 flex justify-between">Password {touchedFields.password && !errors.password && <CheckCircle2 className="size-3 text-green-500" />}</FormLabel>
@@ -127,8 +121,6 @@ export default function Register() {
                                         <FormMessage className="text-[10px] italic font-bold" />
                                     </FormItem>
                                 )} />
-
-                                {/* Re-Password */}
                                 <FormField control={form.control} name="rePassword" render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-[10px] font-black uppercase text-slate-500 flex justify-between">Confirm Password {touchedFields.rePassword && !errors.rePassword && <CheckCircle2 className="size-3 text-green-500" />}</FormLabel>
@@ -141,14 +133,12 @@ export default function Register() {
                                         <FormMessage className="text-[10px] italic font-bold" />
                                     </FormItem>
                                 )} />
-
                                 <Button disabled={isLoading} className="w-full h-12 rounded-xl text-md font-black uppercase italic bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-100 mt-4 transition-all active:scale-95">
                                     {isLoading ? <Loader2 className="animate-spin" /> : "Sign Up Free"}
                                 </Button>
                             </form>
                         </Form>
                     </div>
-
                     <div className="bg-slate-50/80 p-6 text-center border-t text-sm font-medium">
                         Already a member? <Link href="/login" className="text-blue-600 font-black italic uppercase hover:underline">Login</Link>
                     </div>

@@ -24,7 +24,7 @@ export default function DeleteAddressButton({ addressId }: { addressId: string }
         setIsDeleting(true)
         const result = await deleteAddressAction(addressId)
         setIsDeleting(false)
-        setOpen(false) // قفل المودال بعد الحذف
+        setOpen(false) 
 
         if (result.success) {
             toast.success(result.message)
@@ -64,7 +64,7 @@ export default function DeleteAddressButton({ addressId }: { addressId: string }
                     </AlertDialogCancel>
                     <AlertDialogAction
                         onClick={(e) => {
-                            e.preventDefault(); // عشان نتحكم في القفل يدوي بعد الـ API
+                            e.preventDefault(); 
                             handleDelete();
                         }}
                         disabled={isDeleting}

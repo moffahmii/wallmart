@@ -36,7 +36,7 @@ export default async function CategoryDetails({
 
     return (
         <main className="container mx-auto py-12 px-4">
-            <section className="relative h-[300px] md:h-[400px] w-full rounded-[2.5rem] overflow-hidden mb-12 shadow-xl border border-slate-100">
+            <section className="relative h-75 md:h-100 w-full rounded-[2.5rem] overflow-hidden mb-12 shadow-xl border border-slate-100">
                 <img
                     src={category.image}
                     alt={category.name}

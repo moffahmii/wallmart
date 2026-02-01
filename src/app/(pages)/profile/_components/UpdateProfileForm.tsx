@@ -24,7 +24,6 @@ export default function UpdateProfileForm({ user }: { user: any }) {
 
         if (res.success) {
             toast.success("Profile updated! Please log in again to refresh data.")
-            // الـ API ده بيحتاج أحياناً إعادة تسجيل دخول لتحديث الـ Token بالبيانات الجديدة
         } else {
             toast.error(res.message)
         }

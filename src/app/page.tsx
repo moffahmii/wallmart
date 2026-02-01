@@ -131,7 +131,6 @@ export default async function HomePage() {
 }
 
 // ================= UI COMPONENTS =================
-
 function Feature({
   icon,
   title,

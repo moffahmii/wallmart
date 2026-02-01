@@ -26,15 +26,11 @@ export default function AddressCard({ addr }: { addr: any }) {
                             <span className="size-1 bg-slate-300 rounded-full" /> {addr.phone}
                         </p>
                     </div>
-
-                    {/* نوقف الـ Bubbling عشان لما ندوس حذف ميفتحش المودال */}
                     <div onClick={(e) => e.stopPropagation()}>
                         <DeleteAddressButton addressId={addr._id} />
                     </div>
                 </CardContent>
             </Card>
-
-            {/* مودال التعديل */}
             <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
                 <DialogContent className="rounded-[2.5rem] border-none p-8 shadow-2xl">
                     <DialogHeader>

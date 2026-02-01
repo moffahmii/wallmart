@@ -59,7 +59,6 @@ export default function ForgotPassword() {
         <div className="flex flex-col justify-center items-center min-h-[85vh] px-4 bg-slate-50/30">
             <div className="w-full max-w-md">
                 <div className="border-none shadow-2xl rounded-[32px] overflow-hidden bg-white">
-                    {/* Header */}
                     <div className="bg-slate-50/80 p-10 text-center space-y-3 border-b border-slate-100">
                         <div className="mx-auto w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-200">
                             <KeyRound size={32} />
@@ -71,7 +70,6 @@ export default function ForgotPassword() {
                             Enter your email to recover your account
                         </p>
                     </div>
-
                     <div className="p-8">
                         {serverMessage && (
                             <div className={`mb-6 p-4 rounded-2xl border-2 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300 ${serverMessage.type === 'success'
@@ -84,7 +82,6 @@ export default function ForgotPassword() {
                                 </span>
                             </div>
                         )}
-
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                                 <FormField
@@ -145,7 +142,6 @@ export default function ForgotPassword() {
                         </div>
                     </div>
                 </div>
-                {/* Footer Note */}
                 <p className="mt-8 text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest">
                     WallMart Security System v2.0
                 </p>

@@ -25,8 +25,6 @@ export default function EditProfileModal({ user }: { user: any }) {
                         Identity
                     </DialogTitle>
                 </DialogHeader>
-
-                {/* تمرير onSuccess هنا مسموح لأننا داخل Client Component */}
                 <EditProfileForm user={user} onSuccess={() => setOpen(false)} />
             </DialogContent>
         </Dialog>

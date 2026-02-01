@@ -1,4 +1,4 @@
-'use client' // ملفات الـ Error لازم تكون Client Components
+'use client' 
 
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
@@ -32,7 +32,7 @@ export default function Error({
             <div className="flex gap-4">
                 <Button
                     size="lg"
-                    onClick={() => reset()} // دالة reset بتحاول تعيد تحميل الـ Component اللي باظ بس
+                    onClick={() => reset()} 
                     className="h-14 px-8 text-lg font-black rounded-2xl bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-200"
                 >
                     <RefreshCcw className="mr-2 size-5" /> TRY AGAIN

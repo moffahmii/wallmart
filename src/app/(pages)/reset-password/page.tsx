@@ -57,7 +57,6 @@ export default function ResetPassword() {
         <div className="flex flex-col justify-center items-center min-h-[85vh] px-4">
             <div className="w-full max-w-md">
                 <div className="border-none shadow-2xl rounded-[32px] overflow-hidden bg-white">
-                    {/* Header */}
                     <div className="bg-slate-50/80 p-10 text-center space-y-3 border-b">
                         <div className="mx-auto w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-200">
                             <Save size={32} />
@@ -67,7 +66,6 @@ export default function ResetPassword() {
                             Secure your account with a new password
                         </p>
                     </div>
-
                     <div className="p-8">
                         {serverMessage && (
                             <div className={`mb-6 p-4 rounded-2xl border-2 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300 ${serverMessage.type === 'success'
@@ -82,7 +80,6 @@ export default function ResetPassword() {
                         )}
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                                {/* Email Field */}
                                 <FormField control={form.control} name="email" render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-[10px] font-black uppercase text-slate-500 flex justify-between tracking-widest">
@@ -97,8 +94,6 @@ export default function ResetPassword() {
                                         <FormMessage className="text-[10px] italic font-bold text-red-600" />
                                     </FormItem>
                                 )} />
-
-                                {/* New Password Field */}
                                 <FormField control={form.control} name="newPassword" render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-[10px] font-black uppercase text-slate-500 flex justify-between tracking-widest">
@@ -113,7 +108,6 @@ export default function ResetPassword() {
                                         <FormMessage className="text-[10px] italic font-bold leading-tight text-red-600" />
                                     </FormItem>
                                 )} />
-
                                 <Button
                                     type="submit"
                                     disabled={isLoading || !form.formState.isValid}

@@ -12,7 +12,6 @@ export default async function Categories() {
 
     return (
         <main className="container mx-auto py-12 px-4">
-            {/* Header */}
             <div className="mb-12 border-b pb-8">
                 <h1 className="text-4xl md:text-5xl font-black tracking-tighter italic uppercase">Shop by Category</h1>
                 <p className="text-muted-foreground mt-2 text-lg font-medium italic">Discover everything you need, organized just for you.</p>

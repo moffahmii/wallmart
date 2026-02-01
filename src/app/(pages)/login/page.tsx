@@ -71,7 +71,6 @@ export default function Login() {
                         )}
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                                {/* Email Field */}
                                 <FormField
                                     control={form.control}
                                     name="email"
@@ -94,7 +93,6 @@ export default function Login() {
                                         </FormItem>
                                     )}
                                 />
-                                {/* Password Field */}
                                 <FormField
                                     control={form.control}
                                     name="password"

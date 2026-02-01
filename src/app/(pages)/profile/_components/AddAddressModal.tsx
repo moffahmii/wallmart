@@ -21,14 +21,12 @@ export default function AddAddressModal() {
                     <Plus className="mr-2 h-4 w-4" /> Add New Address
                 </Button>
             </DialogTrigger>
-
             <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none shadow-2xl p-8">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-black uppercase italic text-slate-900 border-b pb-4">
                         New Address
                     </DialogTitle>
                 </DialogHeader>
-
                 <AddressForm onSuccess={() => setOpen(false)} />
             </DialogContent>
         </Dialog>

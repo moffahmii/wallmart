@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge"
 import { Package, Clock, MapPin, CheckCircle2, CreditCard, ChevronDown } from "lucide-react"
 
 export default function OrdersSection({ orders = [] }: { orders: any[] }) {
-    // التأكد من أننا نتعامل مع مصفوفة دائمًا
     const safeOrders = Array.isArray(orders) ? orders : [];
 
     if (safeOrders.length === 0) {
@@ -20,7 +19,6 @@ export default function OrdersSection({ orders = [] }: { orders: any[] }) {
             {safeOrders.map((order) => (
                 <Card key={order._id} className="rounded-[2.5rem] border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden group hover:border-blue-200 transition-all duration-500">
                     <CardContent className="p-0">
-                        {/* 1. Order Top Bar (Info & Status) */}
                         <div className="bg-slate-50/80 p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100">
                             <div className="space-y-1">
                                 <div className="flex items-center gap-3">
@@ -55,12 +53,11 @@ export default function OrdersSection({ orders = [] }: { orders: any[] }) {
                             </div>
                         </div>
 
-                        {/* 2. Products List */}
                         <div className="p-6 md:p-8">
                             <div className="grid grid-cols-1 gap-6">
                                 {order.cartItems?.map((item: any) => (
                                     <div key={item._id} className="flex items-center gap-6 group/item">
-                                        <div className="relative size-20 md:size-24 flex-shrink-0 overflow-hidden rounded-3xl border border-slate-100 shadow-sm group-hover/item:scale-105 transition-transform duration-500">
+                                        <div className="relative size-20 md:size-24 shrink-0 overflow-hidden rounded-3xl border border-slate-100 shadow-sm group-hover/item:scale-105 transition-transform duration-500">
                                             <img
                                                 src={item.product.imageCover}
                                                 alt={item.product.title}
@@ -85,8 +82,6 @@ export default function OrdersSection({ orders = [] }: { orders: any[] }) {
                                 ))}
                             </div>
                         </div>
-
-                        {/* 3. Bottom Footer (Payment Info) */}
                         <div className="bg-slate-50/30 px-8 py-5 flex items-center justify-between border-t border-slate-100/50">
                             <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                                 <CreditCard className="size-3" /> Method: <span className="text-slate-900 italic">{order.paymentMethodType}</span>
