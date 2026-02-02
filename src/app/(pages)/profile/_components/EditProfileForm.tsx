@@ -26,7 +26,7 @@ export default function EditProfileForm({ user, onSuccess }: { user: any, onSucc
 
         if (result.success) {
             toast.success("Profile updated successfully!")
-            onSuccess() // 👈 عشان المودال يقفل لوحده بعد النجاح
+            onSuccess() 
         } else {
             toast.error(result.message)
         }

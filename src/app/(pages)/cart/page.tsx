@@ -61,7 +61,7 @@ export default function Cart() {
                 toast.error("Failed to clear cart");
             }
         } finally {
-            setIsClearing(false); // أنهِ التحميل
+            setIsClearing(false); 
         }
     }
 
