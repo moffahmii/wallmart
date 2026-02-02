@@ -19,6 +19,7 @@ export async function getCartAction() {
         const res = await fetch(BASE_URL, {
             method: 'GET',
             headers,
+            cache: 'no-store',
             next: { tags: ['cart'] }
         });
         if (res.status === 404) return { status: 'success', numOfCartItems: 0, data: { products: [] } };
@@ -57,5 +58,26 @@ export async function removeFromCartAction(productId: string) {
         return data;
     } catch (error) {
         return { status: 'error' };
+    }
+}
+export async function clearCartAction(cartId: string) {
+    try {
+        const headers = await getAuthHeaders();
+        const res = await fetch(`${BASE_URL}`, { 
+            method: 'DELETE',
+            headers
+        });
+
+        if (res.ok) {
+            revalidateTag('cart', '');
+            return {
+                status: 'success',
+                numOfCartItems: 0,
+                data: { products: [], totalCartPrice: 0 }
+            };
+        }
+        return await res.json();
+    } catch (error) {
+        return { status: 'error', message: 'Could not connect to server' };
     }
 }

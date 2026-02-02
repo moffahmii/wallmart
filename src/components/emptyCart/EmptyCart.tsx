@@ -1,4 +1,6 @@
-import { ShoppingBag, Link, ArrowLeft } from 'lucide-react'
+import { ShoppingBag, ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
+
 import React from 'react'
 import { Button } from '../ui/button'
 

@@ -1,6 +1,5 @@
 'use client'
-
-import { createContext, ReactNode, useEffect, useState, useCallback } from "react"
+import { createContext, ReactNode, useEffect, useState, useCallback, useRef } from "react"
 import { getCartAction } from "@/app/(pages)/cart/_actions/cartActions"
 import { CartResponse } from "@/interfaces"
 
@@ -15,9 +14,10 @@ export const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export default function CartContextProvider({ children }: { children: ReactNode }) {
     const [cartContent, setCartContent] = useState<CartResponse | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const isFirstRun = useRef(true); 
+
     const getCart = useCallback(async () => {
-        setIsLoading(true);
         try {
             const data = await getCartAction();
             if (data?.status === 'success') {
@@ -33,7 +33,10 @@ export default function CartContextProvider({ children }: { children: ReactNode 
     }, []);
 
     useEffect(() => {
-        getCart();
+        if (isFirstRun.current) {
+            getCart();
+            isFirstRun.current = false;
+        }
     }, [getCart]);
 
     return (

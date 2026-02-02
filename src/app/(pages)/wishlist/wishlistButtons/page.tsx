@@ -51,7 +51,7 @@ export default function WishlistButton({ productId, isFavoriteInitial }: Wishlis
             disabled={isPending}
             className={`
                 flex items-center justify-center p-2.5 transition-all duration-300
-                rounded-(--radius) border border-border
+                 rounded-full border-2
                 ${isFavorite 
                     ? 'bg-destructive/10 text-destructive border-destructive/20' 
                     : 'bg-secondary/50 text-foreground hover:border-primary/30'}

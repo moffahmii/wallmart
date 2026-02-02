@@ -5,10 +5,7 @@ import OrdersSection from "../profile/_components/OrdersSection";
 
 export default async function AllOrdersPage() {
     const session = await getServerSession(authOptions);
-    const userId = (session?.user as any)?.id;
-    if (!userId) {
-        return <div className="py-20 text-center font-black uppercase italic">Session Error: No User ID</div>;
-    }
+    const userId = session?.user?._id as string;
     const orders = await getUserOrdersAction(userId);
     return (
         <main className="min-h-screen bg-white py-20">

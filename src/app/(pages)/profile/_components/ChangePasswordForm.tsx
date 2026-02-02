@@ -26,10 +26,10 @@ export default function ChangePasswordForm({ onSuccess }: { onSuccess: () => voi
         setIsLoading(false)
 
         if (result.success) {
-            toast.success(result.message)
+            toast.success("Password changed successfully!")
             onSuccess()
         } else {
-            toast.error(result.message)
+            toast.error(result.message || "Failed to change password")
         }
     }
 

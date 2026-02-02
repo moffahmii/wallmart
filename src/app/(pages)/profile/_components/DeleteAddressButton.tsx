@@ -24,12 +24,12 @@ export default function DeleteAddressButton({ addressId }: { addressId: string }
         setIsDeleting(true)
         const result = await deleteAddressAction(addressId)
         setIsDeleting(false)
-        setOpen(false) 
+        setOpen(false)
 
         if (result.success) {
-            toast.success(result.message)
+            toast.success('Address deleted successfully')
         } else {
-            toast.error(result.message)
+            toast.error('Failed to delete address. Please try again.')
         }
     }
 
@@ -64,7 +64,7 @@ export default function DeleteAddressButton({ addressId }: { addressId: string }
                     </AlertDialogCancel>
                     <AlertDialogAction
                         onClick={(e) => {
-                            e.preventDefault(); 
+                            e.preventDefault();
                             handleDelete();
                         }}
                         disabled={isDeleting}

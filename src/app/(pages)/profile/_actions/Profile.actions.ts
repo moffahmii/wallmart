@@ -92,16 +92,24 @@ export async function getUserOrdersAction(userId: string) {
     }
 }
 
+// أضف هذا الاستيراد في أعلى الملف
+import { revalidatePath } from "next/cache";
+
 export async function updateMeAction(payload: { name: string, email: string, phone: string }) {
     try {
         const headers = await getHeaders();
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/updateMe`, {
             method: "PUT",
-            headers,
+            headers: {
+            },
             body: JSON.stringify(payload)
         });
         const data = await res.json();
-        return res.ok ? { success: true, data: data.user } : { success: false, message: data.message };
+        if (res.ok) {
+            revalidatePath("/", "layout");
+            return { success: true, data: data.user };
+        }
+        return { success: false, message: data.message || "Update failed" };
     } catch (error) {
         return { success: false, message: "Network error" };
     }

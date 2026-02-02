@@ -3,9 +3,9 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { updateMeAction } from "../_actions/Profile.actions" // سنضيفه للأكشنز
+import { updateMeAction } from "../_actions/Profile.actions"
 import { toast } from "sonner"
-import { Loader2, User } from "lucide-react"
+import { Loader2 } from "lucide-react"
 
 export default function EditProfileForm({ user, onSuccess }: { user: any, onSuccess: () => void }) {
     const [isLoading, setIsLoading] = useState(false)
@@ -13,6 +13,7 @@ export default function EditProfileForm({ user, onSuccess }: { user: any, onSucc
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         setIsLoading(true)
+
         const formData = new FormData(e.currentTarget)
         const payload = {
             name: formData.get("name") as string,
@@ -24,8 +25,8 @@ export default function EditProfileForm({ user, onSuccess }: { user: any, onSucc
         setIsLoading(false)
 
         if (result.success) {
-            toast.success("Profile updated! Please re-login to see changes.")
-            onSuccess()
+            toast.success("Profile updated successfully!")
+            onSuccess() // 👈 عشان المودال يقفل لوحده بعد النجاح
         } else {
             toast.error(result.message)
         }
