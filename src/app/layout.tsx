@@ -7,6 +7,7 @@ import CartContextProvider from "@/components/context/cartContext";
 import Footer from "@/components/footer/Footer";
 import MySessionProvider from "@/components/mySessionProvider/MySessionProvider";
 import WishlistFloatButton from "./(pages)/wishlist/wishlistButtons/WishlistFloatButton";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
             <Toaster position="top-center" richColors />
           </CartContextProvider>
         </MySessionProvider>
+        <Analytics />
       </body>
     </html>
   );
