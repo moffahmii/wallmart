@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wallmart
 
-## Getting Started
+A full-stack e-commerce platform built with Next.js, designed to deliver a modern, secure, and scalable online shopping experience.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Wallmart is a complete e-commerce solution that allows users to browse products, manage shopping carts and wishlists, authenticate securely, manage their profiles, and track orders through a responsive and user-friendly interface.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The project focuses on performance, security, and usability while demonstrating modern full-stack development practices.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Product Management
 
-## Learn More
+* Browse products by category
+* Browse products by brand
+* Product filtering and navigation
+* Responsive product listings
 
-To learn more about Next.js, take a look at the following resources:
+### Shopping Cart
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Add products to cart
+* Update product quantities
+* Remove products from cart
+* Clear entire cart
+* Real-time cart updates
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Wishlist
 
-## Deploy on Vercel
+* Add products to wishlist
+* Remove products from wishlist
+* Manage saved items
+* Full CRUD operations
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Authentication & Security
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* User registration and login
+* Secure authentication using NextAuth.js
+* Protected routes
+* Session management
+* OTP-based password reset
+
+### User Profile Management
+
+* View personal information
+* Update account details
+* Manage shipping addresses
+* Add, edit, and remove addresses
+
+### Order Management
+
+* View order history
+* Track order status
+* Monitor purchase activity
+
+## Tech Stack
+
+### Frontend
+
+* Next.js
+* Tailwind CSS
+* shadcn/ui
+
+### Authentication
+
+* NextAuth.js
+
+### State Management & Data Fetching
+
+* React Query
+
+### Form Handling & Validation
+
+* React Hook Form
+* Zod
+
+## Architecture Highlights
+
+* Server-Side Rendering (SSR)
+* Responsive Design
+* Reusable Components
+* Secure Authentication Flow
+* Optimized Client and Server Performance
+* Scalable Folder Structure
+
+## Key Functionalities
+
+* Product browsing by categories and brands
+* Shopping cart management
+* Wishlist management
+* User authentication and authorization
+* OTP password recovery
+* Profile and address management
+* Order tracking system
+
+## Learning Outcomes
+
+This project helped strengthen skills in:
+
+* Full-Stack Web Development
+* Authentication and Authorization
+* State Management
+* Form Validation
+* Scalable Application Architecture
+* Building Production-Ready E-Commerce Systems
+* Performance Optimization in Next.js
+
+## Future Enhancements
+
+* Product Reviews and Ratings
+* Payment Gateway Integration
+* Coupon and Discount System
+* Admin Dashboard
+* Advanced Search and Filtering
+* Product Recommendations
+* Multi-language Support
